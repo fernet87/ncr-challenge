@@ -1,0 +1,12 @@
+.floating {
+  float: right;
+  top: 80px;
+  right: 20px;
+  z-index: 9999;
+  border-radius: 0px;
+}
+
+.btn-floating {
+  float: right;
+  right: 20px;
+}
