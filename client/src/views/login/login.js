@@ -4,9 +4,9 @@ import { useForm } from "react-hook-form";
 import { useUser } from "../../contexts/user-context";
 import './login.css';
 import PanelForm from "../../components/panel-form";
-import TextField from "../../components/fields/input/text-field";
-import PasswordField from "../../components/fields/input/password-field";
-import SubmitButton from "../../components/buttons/submit-button";
+import TextField from "../../components/controls/fields/input/text-field";
+import PasswordField from "../../components/controls/fields/input/password-field";
+import SubmitButton from "../../components/controls/buttons/submit-button";
 
 const [USER, PASSWORD] = ['user', 'password'];
 

@@ -2,7 +2,7 @@ import Panel from "../../components/panel/panel";
 import { useUser } from "../../contexts/user-context";
 import configData from "../../config.json";
 import React, { useEffect } from "react";
-import SelectField from "../../components/fields/select/select-field";
+import SelectField from "../../components/controls/fields/select/select-field";
 import { useForm } from "react-hook-form";
 import Axios from "axios";
 import AngularGaugeChart from "../../components/charts/angular-gauge-chart/angular-gauge-chart";

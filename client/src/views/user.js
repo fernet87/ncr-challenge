@@ -3,18 +3,18 @@ import { useLocation } from "react-router";
 import { useEffect } from "react";
 import { useUser } from "../contexts/user-context";
 import PanelForm from "../components/panel-form";
-import InputField from "../components/fields/input/input-field";
+import InputField from "../components/controls/fields/input/input-field";
 import { useForm } from "react-hook-form";
-import SelectField from "../components/fields/select/select-field";
+import SelectField from "../components/controls/fields/select/select-field";
 import configData from "../config.json";
 import Axios from "axios";
 import { useAlertMessage } from "../contexts/alert-message-context";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useFieldError } from "../contexts/field-error-context";
-import TextField from "../components/fields/input/text-field";
-import MailField from "../components/fields/input/mail-field";
-import PasswordField from "../components/fields/input/password-field";
-import SubmitButton from "../components/buttons/submit-button";
+import TextField from "../components/controls/fields/input/text-field";
+import MailField from "../components/controls/fields/input/mail-field";
+import PasswordField from "../components/controls/fields/input/password-field";
+import SubmitButton from "../components/controls/buttons/submit-button";
 
 const [
   NAME,

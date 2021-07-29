@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
-import { useFieldError } from "../../../contexts/field-error-context";
-import { toCamelCase } from "../../../utils/string-utils";
+import { useFieldError } from "../../../../contexts/field-error-context";
+import { toCamelCase } from "../../../../utils/string-utils";
 import './input-field.css'
 
 // props: register, type, attr, label, required, validationObject
