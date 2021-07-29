@@ -9,7 +9,7 @@ import PanelForm from "../../components/panel-form";
 const [USER, PASSWORD] = ['user', 'password'];
 
 export default function Login() {
-  const { register, handleSubmit } = useForm();
+  const methods = useForm();
 
   const { logIn } = useUser();
 
@@ -20,16 +20,16 @@ export default function Login() {
   }
 
   return (
-    <PanelForm title="Login" size="small" onSubmit={handleSubmit(doLogin)} >
+    <PanelForm title="Login" size="small" methods={methods} onSubmit={doLogin} >
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-md-6">
-            <InputField register={register} type="text" attr={USER} label="User or Email address" required ></InputField>
+            <InputField type="text" attr={USER} label="User or Email address" required ></InputField>
           </div>
         </div>
         <div className="row justify-content-center">
           <div className="col-md-6">
-            <InputField register={register} type="password" attr={PASSWORD} label="Password" required ></InputField>
+            <InputField type="password" attr={PASSWORD} label="Password" required ></InputField>
           </div>
         </div>
         <div className="row justify-content-center">

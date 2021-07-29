@@ -1,6 +1,8 @@
+import { useFormContext } from "react-hook-form";
 
 // props: register, attr, label, options
 export default function SelectField(props) {
+  const { register } = useFormContext();
 
   const getId = () => {
     return 'select-' + props.attr;
@@ -20,7 +22,7 @@ export default function SelectField(props) {
 
   return (
     <select
-      {...props.register(props.attr)}
+      {...register(props.attr)}
       id={getId(props.attr)}
       className="form-select form-select-lg mb-4"
       aria-label="Default select example"

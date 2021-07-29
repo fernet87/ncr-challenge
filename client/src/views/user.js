@@ -35,14 +35,14 @@ export default function User() {
   const { checkLogin } = useUser();
   const location = useLocation();
   const defaultValues = location.state;
-  const { register, handleSubmit, getValues, formState: { errors } } = useForm({ defaultValues: defaultValues });
+  const methods = useForm({ defaultValues: defaultValues });
   const [update, setUpdate] = React.useState(false);
   const { addSuccessMessage, addErrorMessage } = useAlertMessage();
   const { addFieldError, cleanFieldError } = useFieldError();
 
   const onCreateUser = () => {
     cleanFieldError();
-    const user = getValues();
+    const user = methods.getValues();
     let valid = true;
     if (!update && (user.password !== user.repeatPassword)) {
       valid = false;
@@ -58,7 +58,7 @@ export default function User() {
       responsePromise.then(response => {
         return response.data;
       }).then(user => {
-        const values = getValues();
+        const values = methods.getValues();
         addSuccessMessage("El usuario " + user.name + " fue " + ((update) ? "actualizado" : "creado") + " exitosamente.");
         history.push('/Users', { store: values.store } );
       }).catch((error) => {
@@ -71,7 +71,7 @@ export default function User() {
   };
 
   function createTransferObject() {
-    const values = getValues();
+    const values = methods.getValues();
     return {
       name: values.name,
       lastName: values.lastName,
@@ -91,7 +91,7 @@ export default function User() {
 
   async function updateUser() {
     const updateObject = createTransferObject();
-    updateObject.id = getValues().id;
+    updateObject.id = methods.getValues().id;
     return await Axios.put(configData.SERVER_URL + 'user/update', updateObject);
   };
 
@@ -112,41 +112,39 @@ export default function User() {
   }, [location.state]);
   
   return (
-    <PanelForm title={getTitle()} size="medium" onSubmit={handleSubmit(onCreateUser)} >
+    <PanelForm title={getTitle()} size="medium" methods={methods} onSubmit={onCreateUser} >
       { checkLogin() }
       <div className="container">
         <div className="row">
           <div className="col-md-6">
-            <InputField register={register} errors={errors} type="text" attr={NAME.id} label={NAME.label} required ></InputField>
+            <InputField type="text" attr={NAME.id} label={NAME.label} required ></InputField>
           </div>
           <div className="col-md-6">
-            <InputField register={register} errors={errors} type="text" attr={LAST_NAME.id} label={LAST_NAME.label} required ></InputField>
+            <InputField type="text" attr={LAST_NAME.id} label={LAST_NAME.label} required ></InputField>
           </div>
         </div>
         <div className="row">
           <div className="col-md-6">
-            <InputField register={register} errors={errors} type="text" attr={USER.id} label={USER.label} required ></InputField>
+            <InputField type="text" attr={USER.id} label={USER.label} required ></InputField>
           </div>
           <div className="col-md-6">
-            <InputField register={register} errors={errors} type="mail" attr={EMAIL.id} label={EMAIL.label} 
+            <InputField type="mail" attr={EMAIL.id} label={EMAIL.label} 
               pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" required ></InputField>
           </div>
         </div>
         {(!update) ? (
           <div className="row">
             <div className="col-md-6">
-              <InputField register={register} errors={errors} type="password" attr={PASSWORD.id} label={PASSWORD.label} minLength='8' required ></InputField>
+              <InputField type="password" attr={PASSWORD.id} label={PASSWORD.label} minLength='8' required ></InputField>
             </div>
             <div className="col-md-6">
-              <InputField register={register} errors={errors} type="password" attr={REPEAT_PASSWORD.id} label={REPEAT_PASSWORD.label} minLength='8' required ></InputField>
+              <InputField type="password" attr={REPEAT_PASSWORD.id} label={REPEAT_PASSWORD.label} minLength='8' required ></InputField>
             </div>
           </div>
         ) : (<></>) }
         <div className="row">
           <div className="col-md-6">
             <SelectField
-              register={register}
-              errors={errors}
               attr={PROFILE.id}
               label={PROFILE.label}
               options={[{value: 1, label: 'Cajero'}, {value: 2, label: 'Supervisor'}]} 
