@@ -5,12 +5,13 @@ import React, { useEffect } from "react";
 import SelectField from "../../components/fields/select/select-field";
 import { useForm } from "react-hook-form";
 import Axios from "axios";
-import AngularGaugeChart from "../../components/angular-gauge-chart/angular-gauge-chart";
+import AngularGaugeChart from "../../components/charts/angular-gauge-chart/angular-gauge-chart";
 import './stats.css'
+import PanelForm from "../../components/panel-form";
 
 export default function Stats() {
   const { checkLogin } = useUser();
-  const { register, setValue } = useForm();
+  const methods = useForm();
   const [stores, setStores] = React.useState([]);
   const [stats, setStats] = React.useState({});
 
@@ -47,17 +48,16 @@ export default function Stats() {
       );
       setStores(storeListForSelectField);
       assignStats(storeListForSelectField[1].value);
-      setValue("store", 1);
+      methods.setValue("store", 1);
     });
   }, []);
 
   return (
-    <Panel title="Info de usuarios" size="large" >
+    <PanelForm title="Info de usuarios" size="large" methods={methods} >
       { checkLogin() }
       <div className="row">
         <div className="col-md-6">
           <SelectField
-            register={register}
             attr="store"
             options={stores}
             onChange={onStoreChange}
@@ -94,6 +94,6 @@ export default function Stats() {
         </div>
       </div>
 
-    </Panel>
+    </PanelForm>
   );
 }
