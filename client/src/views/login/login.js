@@ -2,9 +2,11 @@ import React from "react";
 
 import { useForm } from "react-hook-form";
 import { useUser } from "../../contexts/user-context";
-import InputField from "../../components/fields/input/input-field";
 import './login.css';
 import PanelForm from "../../components/panel-form";
+import TextField from "../../components/fields/input/text-field";
+import PasswordField from "../../components/fields/input/password-field";
+import SubmitButton from "../../components/buttons/submit-button";
 
 const [USER, PASSWORD] = ['user', 'password'];
 
@@ -24,17 +26,17 @@ export default function Login() {
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-md-6">
-            <InputField type="text" attr={USER} label="User or Email address" required ></InputField>
+            <TextField attr={USER} label="User or Email address" required ></TextField>
           </div>
         </div>
         <div className="row justify-content-center">
           <div className="col-md-6">
-            <InputField type="password" attr={PASSWORD} label="Password" required ></InputField>
+            <PasswordField attr={PASSWORD} label="Password" required ></PasswordField>
           </div>
         </div>
         <div className="row justify-content-center">
           <div className="col-md-4">
-            <button className="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+            <SubmitButton label="Sign in" className="w-100" large></SubmitButton>
           </div>
         </div>
       </div>

@@ -11,6 +11,10 @@ import Axios from "axios";
 import { useAlertMessage } from "../contexts/alert-message-context";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useFieldError } from "../contexts/field-error-context";
+import TextField from "../components/fields/input/text-field";
+import MailField from "../components/fields/input/mail-field";
+import PasswordField from "../components/fields/input/password-field";
+import SubmitButton from "../components/buttons/submit-button";
 
 const [
   NAME,
@@ -117,28 +121,27 @@ export default function User() {
       <div className="container">
         <div className="row">
           <div className="col-md-6">
-            <InputField type="text" attr={NAME.id} label={NAME.label} required ></InputField>
+            <TextField attr={NAME.id} label={NAME.label} required ></TextField>
           </div>
           <div className="col-md-6">
-            <InputField type="text" attr={LAST_NAME.id} label={LAST_NAME.label} required ></InputField>
+            <TextField attr={LAST_NAME.id} label={LAST_NAME.label} required ></TextField>
           </div>
         </div>
         <div className="row">
           <div className="col-md-6">
-            <InputField type="text" attr={USER.id} label={USER.label} required ></InputField>
+            <TextField attr={USER.id} label={USER.label} required ></TextField>
           </div>
           <div className="col-md-6">
-            <InputField type="mail" attr={EMAIL.id} label={EMAIL.label} 
-              pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" required ></InputField>
+            <MailField attr={EMAIL.id} label={EMAIL.label} required ></MailField>
           </div>
         </div>
         {(!update) ? (
           <div className="row">
             <div className="col-md-6">
-              <InputField type="password" attr={PASSWORD.id} label={PASSWORD.label} minLength='8' required ></InputField>
+              <PasswordField attr={PASSWORD.id} label={PASSWORD.label} minLength='8' required ></PasswordField>
             </div>
             <div className="col-md-6">
-              <InputField type="password" attr={REPEAT_PASSWORD.id} label={REPEAT_PASSWORD.label} minLength='8' required ></InputField>
+              <PasswordField attr={REPEAT_PASSWORD.id} label={REPEAT_PASSWORD.label} minLength='8' required ></PasswordField>
             </div>
           </div>
         ) : (<></>) }
@@ -155,7 +158,7 @@ export default function User() {
       </div>
       <div className="row justify-content-center">
         <div className="col-md-2" align="center" >
-          <button type="submit" className="btn btn-primary">{ getActionLabel() }</button>
+          <SubmitButton label={getActionLabel()} ></SubmitButton>
         </div>
       </div>
     </PanelForm>

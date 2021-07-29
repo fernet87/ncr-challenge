@@ -82,18 +82,20 @@ export default function InputField(props) {
     };
   }
   if (props.pattern) {
-    if (props.type === 'mail') {
-      validationObject.pattern = {
-        value: new RegExp(props.pattern),
-        message: 'E-Mail invalido.'
-      };
+    validationObject.pattern = {
+      value: new RegExp(props.pattern),
+      message: 'El campo debe respetar el siguiente patron: ' + props.pattern
+    };
+  }
+  if (props.type === 'mail') {
+    const pattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$";
+    if (props.pattern) {
+      pattern = props.pattern;
     }
-    else {
-      validationObject.pattern = {
-        value: new RegExp(props.pattern),
-        message: 'El campo debe respetar el siguiente patron: ' + props.pattern
-      };
-    }
+    validationObject.pattern = {
+      value: new RegExp(pattern),
+      message: 'E-Mail invalido.'
+    };
   }
 
   return (
