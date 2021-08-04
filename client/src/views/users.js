@@ -64,7 +64,7 @@ export default function Users() {
     if (storeId > -1) {
       findUsersByStore(storeId).then((users) => {
         const userItemList = users.data.map((user) =>
-          <tr  key={user.name} >
+          <tr  key={user.user} >
             <th scope="row">
               <a href="#" onClick={() => updateUser(user)} >{user.name}</a>
             </th>
