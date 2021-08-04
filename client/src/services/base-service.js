@@ -7,6 +7,10 @@ export async function get(url, body) {
   return await Axios.get(SERVER_URL + url, body);
 }
 
+export async function findById(url, id) {
+  return get(url + '/' + id);
+}
+
 export async function post(url, body) {
   return await Axios.post(SERVER_URL + url, body);
 }

@@ -3,7 +3,7 @@ import { useHistory, useLocation } from "react-router";
 import AlertDialog from "../components/alert-dialog";
 import { useUser } from "../contexts/user-context";
 import { useAlertMessage } from "../contexts/alert-message-context";
-import { deleteUser, getUsersByStore } from '../services/user-service';
+import { deleteUser, findUsersByStore } from '../services/user-service';
 import Panel from "../components/panel/panel";
 
 
@@ -62,7 +62,7 @@ export default function Users() {
   function refreshTable() {
     let storeId = (!location.state) ? -1 : location.state.store.id;
     if (storeId > -1) {
-      getUsersByStore(storeId).then((users) => {
+      findUsersByStore(storeId).then((users) => {
         const userItemList = users.data.map((user) =>
           <tr  key={user.name} >
             <th scope="row">
