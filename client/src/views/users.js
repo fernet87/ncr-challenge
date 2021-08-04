@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { useHistory, useLocation } from "react-router";
-import configData from "./../config.json";
-import Axios from "axios";
 import AlertDialog from "../components/alert-dialog";
 import { useUser } from "../contexts/user-context";
 import { useAlertMessage } from "../contexts/alert-message-context";
+import { deleteUser, getUsersByStore } from '../services/user-service';
 import Panel from "../components/panel/panel";
 
 
@@ -56,16 +55,8 @@ export default function Users() {
     deleteUserAlert()
   }
 
-  async function getUsersByStore(storeId) {
-    return await Axios.get(configData.SERVER_URL + 'user/byStoreId/' + storeId);
-  };
-  
   function deleteUserAlert() {
     setShow(true);
-  };
-
-  async function deleteUser(userId) {
-    return await Axios.delete(configData.SERVER_URL + 'user/' + userId);
   };
 
   function refreshTable() {

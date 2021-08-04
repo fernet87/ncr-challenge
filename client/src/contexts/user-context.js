@@ -9,6 +9,7 @@ import { useFieldError } from "./field-error-context";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import jsSHA from "jssha";
 import configData from "./../config.json";
+import { logIn as logInCall } from "../services/login-service";
 
 const UserContext = React.createContext(() => {});
 
@@ -25,7 +26,7 @@ export function UserProvider(props) {
         shaObj.update(password);
         const hashedPassword = shaObj.getHash("HEX");
         
-        await Axios.get(configData.SERVER_URL + 'login', {params: {user, password: hashedPassword}})
+        logInCall({params: {user, password: hashedPassword}})
         .then((response) => {
             setUser(response.data.model);
             setToken(response.data.token);

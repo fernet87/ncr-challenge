@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router";
 import { useUser } from "../../contexts/user-context";
-import configData from "../../config.json";
-import Axios from "axios";
+import { getStores } from "../../services/store-service";
 import Panel from "../../components/panel/panel";
 import "./stores.css";
 
@@ -15,9 +14,6 @@ export default function Stores(props) {
   };
 
   const [storeItems, setStoreItems] = React.useState([]);
-  async function getStores() {
-    return await Axios.get(configData.SERVER_URL + 'store');
-  };
 
   useEffect(() => {
     getStores().then((stores) => {

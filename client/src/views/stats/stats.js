@@ -1,27 +1,20 @@
-import Panel from "../../components/panel/panel";
-import { useUser } from "../../contexts/user-context";
-import configData from "../../config.json";
-import React, { useEffect } from "react";
-import SelectField from "../../components/controls/fields/select/select-field";
-import { useForm } from "react-hook-form";
 import Axios from "axios";
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import AngularGaugeChart from "../../components/charts/angular-gauge-chart/angular-gauge-chart";
-import './stats.css'
+import SelectField from "../../components/controls/fields/select/select-field";
 import PanelForm from "../../components/panel-form";
+import { useUser } from "../../contexts/user-context";
+import { getStats } from "../../services/stats-service";
+import { getStores } from "../../services/store-service";
+import './stats.css';
+
 
 export default function Stats() {
   const { checkLogin } = useUser();
   const methods = useForm();
   const [stores, setStores] = React.useState([]);
   const [stats, setStats] = React.useState({});
-
-  async function getStores() {
-    return await Axios.get(configData.SERVER_URL + 'store');
-  };
-
-  async function getStats(storeId) {
-    return await Axios.get(configData.SERVER_URL + 'stats/' + storeId);
-  };
 
   function assignStats(storeId) {
     if (storeId > -1) {

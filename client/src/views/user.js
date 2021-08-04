@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { useUser } from "../contexts/user-context";
 import PanelForm from "../components/panel-form";
 import SelectField from "../components/controls/fields/select/select-field";
-import configData from "../config.json";
 import Axios from "axios";
 import { useAlertMessage } from "../contexts/alert-message-context";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
@@ -13,6 +12,7 @@ import TextField from "../components/controls/fields/input/text-field";
 import MailField from "../components/controls/fields/input/mail-field";
 import PasswordField from "../components/controls/fields/input/password-field";
 import SubmitButton from "../components/controls/buttons/submit-button";
+import { createUser, updateUser } from "../services/user-service";
 
 const [
   NAME,
@@ -55,9 +55,9 @@ export default function User() {
     if (valid) {
       let responsePromise;
       if (update) {
-        responsePromise = updateUser();
+        responsePromise = updateUser(createTransferObject(model.id));
       } else {
-        responsePromise = createUser();
+        responsePromise = createUser(createTransferObject());
       }
       responsePromise.then(response => {
         return response.data;
@@ -73,8 +73,8 @@ export default function User() {
     }
   };
 
-  function createTransferObject() {
-    return {
+  function createTransferObject(id) {
+    let object = {
       name: model.name,
       lastName: model.lastName,
       user: model.user,
@@ -84,18 +84,13 @@ export default function User() {
       profile: model.profile,
       storeId: model.store.id
     };
+
+    if (id) {
+      object.id = id;
+    }
+
+    return object;
   }
-
-  async function createUser() {
-    const createObject = createTransferObject();
-    return await Axios.post(configData.SERVER_URL + 'user/create', createObject);
-  };
-
-  async function updateUser() {
-    const updateObject = createTransferObject();
-    updateObject.id = model.id;
-    return await Axios.put(configData.SERVER_URL + 'user/update', updateObject);
-  };
 
   const getActionLabel = () => {
     return (update) ? 'Actualizar' : 'Crear';
