@@ -1,22 +1,22 @@
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import 'bootstrap/dist/css/bootstrap.css';
+import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { UserProvider } from './contexts/user-context';
-import { FieldErrorProvider } from './contexts/field-error-context';
-import { AlertMessageProvider } from './contexts/alert-message-context';
-import AlertMessage from './components/alert-message/alert-message';
 import App from './App';
+import AlertMessage from './components/alert-message/alert-message';
 import Header from './components/header';
+import { AlertMessageProvider } from './contexts/alert-message-context';
+import { FieldErrorProvider } from './contexts/field-error-context';
+import { UserProvider } from './contexts/user-context';
 import Login from './views/login/login';
-import Stores from './views/stores/stores';
-import Users from './views/users';
-import User from './views/user';
-import Stats from './views/stats/stats';
 import PageNotFound from "./views/page-not-found";
+import Stats from './views/stats/stats';
+import Stores from './views/stores/stores';
+import User from './views/user';
+import Users from './views/users';
 import reportWebVitals from './reportWebVitals';
-import './index.css';
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-icons/font/bootstrap-icons.css';
 
 const routing = (
   <React.StrictMode>

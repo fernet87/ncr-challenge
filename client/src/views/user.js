@@ -3,8 +3,6 @@ import { useLocation } from "react-router";
 import { useEffect } from "react";
 import { useUser } from "../contexts/user-context";
 import PanelForm from "../components/panel-form";
-import InputField from "../components/controls/fields/input/input-field";
-import { useForm } from "react-hook-form";
 import SelectField from "../components/controls/fields/select/select-field";
 import configData from "../config.json";
 import Axios from "axios";
@@ -38,17 +36,19 @@ export default function User() {
   const history = useHistory();
   const { checkLogin } = useUser();
   const location = useLocation();
-  const defaultValues = location.state;
-  const methods = useForm({ defaultValues: defaultValues });
+  let model = {};
+  if (location.state) {
+    model = location.state;
+  }
+
   const [update, setUpdate] = React.useState(false);
   const { addSuccessMessage, addErrorMessage } = useAlertMessage();
   const { addFieldError, cleanFieldError } = useFieldError();
 
   const onCreateUser = () => {
     cleanFieldError();
-    const user = methods.getValues();
     let valid = true;
-    if (!update && (user.password !== user.repeatPassword)) {
+    if (!update && (model.password !== model.repeatPassword)) {
       valid = false;
       addFieldError(REPEAT_PASSWORD.id, "Esta contraseña debe ser igual a la del campo password.");
     }
@@ -62,9 +62,8 @@ export default function User() {
       responsePromise.then(response => {
         return response.data;
       }).then(user => {
-        const values = methods.getValues();
         addSuccessMessage("El usuario " + user.name + " fue " + ((update) ? "actualizado" : "creado") + " exitosamente.");
-        history.push('/Users', { store: values.store } );
+        history.push('/Users', { store: model.store } );
       }).catch((error) => {
         if (error.response) {
           addFieldError(error.response.data.field,  error.response.data.message);
@@ -75,16 +74,15 @@ export default function User() {
   };
 
   function createTransferObject() {
-    const values = methods.getValues();
     return {
-      name: values.name,
-      lastName: values.lastName,
-      user: values.user,
-      mail: values.mail,
-      password: values.password,
-      repeatPassword: values.repeatPassword,
-      profile: values.profile,
-      storeId: values.store.id
+      name: model.name,
+      lastName: model.lastName,
+      user: model.user,
+      mail: model.mail,
+      password: model.password,
+      repeatPassword: model.repeatPassword,
+      profile: model.profile,
+      storeId: model.store.id
     };
   }
 
@@ -95,7 +93,7 @@ export default function User() {
 
   async function updateUser() {
     const updateObject = createTransferObject();
-    updateObject.id = methods.getValues().id;
+    updateObject.id = model.id;
     return await Axios.put(configData.SERVER_URL + 'user/update', updateObject);
   };
 
@@ -116,7 +114,7 @@ export default function User() {
   }, [location.state]);
   
   return (
-    <PanelForm title={getTitle()} size="medium" methods={methods} onSubmit={onCreateUser} >
+    <PanelForm title={getTitle()} size="medium" model={model} onSubmit={onCreateUser} >
       { checkLogin() }
       <div className="container">
         <div className="row">

@@ -4,7 +4,7 @@ import Panel from "./panel/panel";
 export default function PanelForm(props) {
   return (
     <Panel title={props.title} size={props.size} >
-      <Form onSubmit={props.onSubmit} methods={props.methods} >
+      <Form onSubmit={props.onSubmit} model={props.model} >
         {props.children}
       </Form>
     </Panel>
