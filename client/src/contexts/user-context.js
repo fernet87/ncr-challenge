@@ -49,7 +49,7 @@ export function UserProvider(props) {
     }
 
   const checkLogin = () => {
-    if (!user) {
+    if (!configData.DEVELOP_MODE && !user) {
       return <Redirect to="/login" />;
     }
     return <></>;
