@@ -1,8 +1,13 @@
+import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 
 // props: register, attr, label, options
 export default function SelectField(props) {
-  const { register } = useFormContext();
+  const methods = useFormContext();
+
+  // useEffect(() => {
+  //   methods.setValue("store", 1)
+  // });
 
   const getId = () => {
     return 'select-' + props.attr;
@@ -15,6 +20,8 @@ export default function SelectField(props) {
   }
 
   const onChange = () => {
+    console.log(methods.getValues("store"))
+    
     if (props.onChange) {
       props.onChange(document.getElementById(getId()).value);
     }
@@ -22,7 +29,7 @@ export default function SelectField(props) {
 
   return (
     <select
-      {...register(props.attr)}
+      {...methods.register(props.attr)}
       id={getId(props.attr)}
       className="form-select form-select-lg mb-4"
       required={props.required}
