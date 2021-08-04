@@ -1,6 +1,4 @@
-import Axios from "axios";
 import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
 import AngularGaugeChart from "../../components/charts/angular-gauge-chart/angular-gauge-chart";
 import SelectField from "../../components/controls/fields/select/select-field";
 import PanelForm from "../../components/panel-form";
@@ -12,10 +10,10 @@ import './stats.css';
 
 export default function Stats() {
   const { checkLogin } = useUser();
-  const methods = useForm();
   const [stores, setStores] = React.useState([]);
   const [stats, setStats] = React.useState({});
-
+  let model = {store: 1};
+  
   function assignStats(storeId) {
     if (storeId > -1) {
       getStats(storeId).then((response) => {
@@ -41,12 +39,11 @@ export default function Stats() {
       );
       setStores(storeListForSelectField);
       assignStats(storeListForSelectField[1].value);
-      methods.setValue("store", 1);
     });
   }, []);
 
   return (
-    <PanelForm title="Info de usuarios" size="large" methods={methods} >
+    <PanelForm title="Info de usuarios" size="large" model={model} >
       { checkLogin() }
       <div className="row">
         <div className="col-md-6">
@@ -86,7 +83,6 @@ export default function Stats() {
           <AngularGaugeChart value={stats.percentageOfSupervisorsOverTotalUsers} id="angular-gauge-chart-2" ></AngularGaugeChart>
         </div>
       </div>
-
     </PanelForm>
   );
 }

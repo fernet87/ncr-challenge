@@ -1,17 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLocation } from "react-router";
-import { useEffect } from "react";
-import { useUser } from "../contexts/user-context";
-import PanelForm from "../components/panel-form";
-import SelectField from "../components/controls/fields/select/select-field";
-import Axios from "axios";
-import { useAlertMessage } from "../contexts/alert-message-context";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { useFieldError } from "../contexts/field-error-context";
-import TextField from "../components/controls/fields/input/text-field";
+import SubmitButton from "../components/controls/buttons/submit-button";
 import MailField from "../components/controls/fields/input/mail-field";
 import PasswordField from "../components/controls/fields/input/password-field";
-import SubmitButton from "../components/controls/buttons/submit-button";
+import TextField from "../components/controls/fields/input/text-field";
+import SelectField from "../components/controls/fields/select/select-field";
+import PanelForm from "../components/panel-form";
+import { useAlertMessage } from "../contexts/alert-message-context";
+import { useFieldError } from "../contexts/field-error-context";
+import { useUser } from "../contexts/user-context";
 import { createUser, updateUser } from "../services/user-service";
 
 const [
@@ -35,15 +33,14 @@ const [
 export default function User() {
   const history = useHistory();
   const { checkLogin } = useUser();
+  const [update, setUpdate] = React.useState(false);
+  const { addSuccessMessage, addErrorMessage } = useAlertMessage();
+  const { addFieldError, cleanFieldError } = useFieldError();
   const location = useLocation();
   let model = {};
   if (location.state) {
     model = location.state;
   }
-
-  const [update, setUpdate] = React.useState(false);
-  const { addSuccessMessage, addErrorMessage } = useAlertMessage();
-  const { addFieldError, cleanFieldError } = useFieldError();
 
   const onCreateUser = () => {
     cleanFieldError();

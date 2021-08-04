@@ -1,6 +1,5 @@
 import React from "react";
 
-import { useForm } from "react-hook-form";
 import { useUser } from "../../contexts/user-context";
 import './login.css';
 import PanelForm from "../../components/panel-form";
@@ -11,8 +10,6 @@ import SubmitButton from "../../components/controls/buttons/submit-button";
 const [USER, PASSWORD] = ['user', 'password'];
 
 export default function Login() {
-  const methods = useForm();
-
   const { logIn } = useUser();
 
   const doLogin = (userData) => {
@@ -22,7 +19,7 @@ export default function Login() {
   }
 
   return (
-    <PanelForm title="Login" size="small" methods={methods} onSubmit={doLogin} >
+    <PanelForm title="Login" size="small" onSubmit={doLogin} >
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-md-6">

@@ -25,7 +25,6 @@ export default function SelectField(props) {
       {...register(props.attr)}
       id={getId(props.attr)}
       className="form-select form-select-lg mb-4"
-      aria-label="Default select example"
       required={props.required}
       onChange={onChange}>
       {/* <option>{props.label}</option> */}
