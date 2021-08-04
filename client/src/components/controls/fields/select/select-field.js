@@ -1,13 +1,8 @@
-import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 
 // props: register, attr, label, options
 export default function SelectField(props) {
   const methods = useFormContext();
-
-  // useEffect(() => {
-  //   methods.setValue("store", 1)
-  // });
 
   const getId = () => {
     return 'select-' + props.attr;
