@@ -34,25 +34,25 @@ public class UserController extends BaseController {
   }
 
   @PostMapping("/create")
-  public ResponseEntity<Response> create(@RequestBody UserModel userDTO) {
-    return createOrUpdateUser(true, userDTO);
+  public ResponseEntity<Response> create(@RequestBody UserModel userModel) {
+    return createOrUpdateUser(true, userModel);
   }
   
   @PutMapping("/update")
-  public ResponseEntity<Response> update(@RequestBody UserModel userDTO) {
-    return createOrUpdateUser(false, userDTO);
+  public ResponseEntity<Response> update(@RequestBody UserModel userModel) {
+    return createOrUpdateUser(false, userModel);
   }
 
-  private ResponseEntity<Response> createOrUpdateUser(Boolean create, UserModel userDTO) {
+  private ResponseEntity<Response> createOrUpdateUser(Boolean create, UserModel userModel) {
     User user = null;
     if (create) {
       user = new User();
     }
     else {
-      user = userService.findById(userDTO.getId()).get();
+      user = userService.findById(userModel.getId()).get();
     }
 
-    user = (User) userDTO.toEntity();
+    user = (User) userModel.toEntity();
 
     ResponseEntity<Response> response = null;
     try {
