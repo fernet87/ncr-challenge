@@ -27,17 +27,15 @@ export function UserProvider(props) {
         
         logInCall({params: {user, password: hashedPassword}})
         .then((response) => {
-            setUser(response.data.model);
-            setToken(response.data.token);
+            setUser(response);
+            // setToken(response.token);
             addSuccessMessage("Te logueaste exitosamente!");
             history.push("/Stores");
             return response;
         })
         .catch((error) => {
-            if (error.response) {
-                addFieldError(error.response.data.field,  error.response.data.message);
-                addErrorMessage(error.response.data.message);
-            }
+            addFieldError(error.field,  error.message);
+            addErrorMessage(error.message);
             return error;
         });
     };

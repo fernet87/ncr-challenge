@@ -1,21 +1,25 @@
 package com.ncr.challenge.models;
 
-public class UserModel {
-  private Long id;
+import com.ncr.challenge.entities.User;
+
+public class UserModel extends BaseModel<User> {
+
   private String name;
   private String lastName;
   private String user;
   private String mail;
   private String password;
   private Short profile;
-  private Long storeId;
+  private StoreModel store;
+        
+  public UserModel() {
+    super();
+  }
+
+  public UserModel(User entity) {
+    super(entity);
+  }
   
-  public Long getId() {
-    return id;
-  }
-  public void setId(Long id) {
-    this.id = id;
-  }
   public String getName() {
     return name;
   }
@@ -52,11 +56,13 @@ public class UserModel {
   public void setProfile(Short profile) {
     this.profile = profile;
   }
-  public Long getStoreId() {
-    return storeId;
+
+  public StoreModel getStore() {
+    return store;
   }
-  public void setStoreId(Long storeId) {
-    this.storeId = storeId;
+
+  public void setStore(StoreModel store) {
+    this.store = store;
   }
   
 }

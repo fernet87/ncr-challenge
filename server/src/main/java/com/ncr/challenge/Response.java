@@ -1,17 +1,32 @@
 package com.ncr.challenge;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import com.ncr.challenge.entities.BaseEntity;
+import com.ncr.challenge.models.BaseModel;
 
 import org.springframework.http.HttpStatus;
 
 public class Response {
   private HttpStatus status;
-  private BaseEntity model;
+  private Collection<? extends BaseModel<? extends BaseEntity>> model;
 
-  public Response(HttpStatus status, BaseEntity model) {
+  public Response(HttpStatus status) {
     super();
     this.status = status;
-    this.model = model;
+  }
+
+  public Response(HttpStatus status, Collection<? extends BaseModel<? extends BaseEntity>> model) {
+    super();
+    this.setStatus(status);
+    this.setModel(model);
+  }
+
+  public <M extends BaseModel<? extends BaseEntity>> Response(HttpStatus status, M model) {
+    super();
+    this.setStatus(status);
+    this.setModel(model);
   }
   
   public HttpStatus getStatus() {
@@ -22,12 +37,16 @@ public class Response {
     this.status = status;
   }
 
-  public BaseEntity getModel() {
+  public Collection<? extends BaseModel<? extends BaseEntity>> getModel() {
     return model;
   }
 
-  public void setModel(BaseEntity model) {
+  public void setModel(Collection<? extends BaseModel<? extends BaseEntity>> model) {
     this.model = model;
+  }
+  
+  public <M extends BaseModel<? extends BaseEntity>> void setModel(M model) {
+    this.model = Arrays.asList(model);
   }
 
 

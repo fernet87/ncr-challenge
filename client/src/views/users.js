@@ -39,7 +39,7 @@ export default function Users() {
   }
 
   const getTitle = () => {
-    return (!location.state) ? "" : "Usuarios de la tienda " + location.state.store.name;
+    return (!location.state || !location.state.store) ? "" : "Usuarios de la tienda " + location.state.store.name;
   }
   
   const updateUser = (user) => {
@@ -63,7 +63,7 @@ export default function Users() {
     let storeId = (!location.state) ? -1 : location.state.store.id;
     if (storeId > -1) {
       findUsersByStore(storeId).then((users) => {
-        const userItemList = users.data.map((user) =>
+        const userItemList = users.map((user) =>
           <tr  key={user.user} >
             <th scope="row">
               <a href="#" onClick={() => updateUser(user)} >{user.name}</a>
@@ -91,15 +91,9 @@ export default function Users() {
       setAlertConfirmation(false);
       if (userToBeDeleted) {
         const userName = userToBeDeleted.name;
-        deleteUser(userToBeDeleted.id).then((response) => {
-          return response.data;
-        }).then((user) => {
-          if (user.status.indexOf("OK") > -1) {
-            addSuccessMessage("El usuario " + userName + " fue eliminado exitosamente.");
-            refreshTable();
-          }
-        }).catch((error) => {
-          return error.response.data;
+        deleteUser(userToBeDeleted.id).then((user) => {
+          addSuccessMessage("El usuario " + userName + " fue eliminado exitosamente.");
+          refreshTable();
         }).then((errorData) => {
           if (errorData) {
             addErrorMessage(errorData.message);

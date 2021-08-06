@@ -1,6 +1,6 @@
 package com.ncr.challenge.services;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import com.ncr.challenge.entities.User;
@@ -14,8 +14,8 @@ public class UserService {
   @Autowired
   UserRepository userRepository;
 
-  public ArrayList<User> getUsers() {
-    return (ArrayList<User>) userRepository.findAll();
+  public List<User> getUsers() {
+    return (List<User>) userRepository.findAll();
   }
 
   public User saveUser(User userModel) {
@@ -34,11 +34,11 @@ public class UserService {
     return userRepository.findByMail(mail);
   }
 
-  public ArrayList<User> findByStoreId(Long storeId) {
+  public List<User> findByStoreId(Long storeId) {
     return userRepository.findByStoreId(storeId);
   }
 
-  public ArrayList<User> findByProfile(Short profile) {
+  public List<User> findByProfile(Short profile) {
     return userRepository.findByProfile(profile);
   }
 

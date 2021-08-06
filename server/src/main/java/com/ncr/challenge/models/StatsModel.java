@@ -1,6 +1,13 @@
 package com.ncr.challenge.models;
 
-public class StatsModel {
+import com.ncr.challenge.entities.BaseEntity;
+
+public class StatsModel extends BaseModel<BaseEntity> {
+  
+  public StatsModel() {
+    super(null);
+  }
+
   private short numberOfCashiers;
   private short numberOfSupervisors;
   private float percentageOfCashiersOverTotalUsers;

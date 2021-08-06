@@ -1,6 +1,6 @@
 package com.ncr.challenge.services;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.ncr.challenge.entities.User;
 import com.ncr.challenge.models.StatsModel;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class StatsService {
 
-  public StatsModel calculateStats(ArrayList<User> users) {
+  public StatsModel calculateStats(List<User> users) {
     StatsModel stats = new StatsModel();
     
     Short totalUsers = Short.valueOf((short) users.size());

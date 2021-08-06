@@ -16,22 +16,19 @@ export default function Stats() {
   
   function assignStats(storeId) {
     if (storeId > -1) {
-      getStats(storeId).then((response) => {
-        return response.data;
-      }).then((statistics) => {
-        setStats(statistics);
+      getStats(storeId).then((statistics) => {
+        setStats(statistics[0]);
       });  
     }
   }
 
   function onStoreChange(storeId) {
     assignStats(storeId);
+    model.store = parseInt(storeId);
   }
 
   useEffect(() => {
-    getStores().then((response) => {
-      return response.data;
-    }).then((storeList) => {
+    getStores().then((storeList) => {
       let storeListForSelectField = [];
       storeListForSelectField.push({ value: -1, label: "Seleccione una tienda" });
       storeList.map((option) =>

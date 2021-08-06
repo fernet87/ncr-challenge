@@ -1,6 +1,6 @@
 package com.ncr.challenge.services;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import com.ncr.challenge.entities.Store;
@@ -14,8 +14,8 @@ public class StoreService {
   @Autowired
   StoreRepository storeRepository;
 
-  public ArrayList<Store> getStores() {
-    return (ArrayList<Store>) storeRepository.findAll();
+  public List<Store> getStores() {
+    return (List<Store>) storeRepository.findAll();
   }
 
   public Optional<Store> findById(Long id) {

@@ -56,16 +56,12 @@ export default function User() {
       } else {
         responsePromise = createUser(createTransferObject());
       }
-      responsePromise.then(response => {
-        return response.data;
-      }).then(user => {
-        addSuccessMessage("El usuario " + user.name + " fue " + ((update) ? "actualizado" : "creado") + " exitosamente.");
+      responsePromise.then(user => {
+        addSuccessMessage("El usuario " + user[0].name + " fue " + ((update) ? "actualizado" : "creado") + " exitosamente.");
         history.push('/Users', { store: model.store } );
       }).catch((error) => {
-        if (error.response) {
-          addFieldError(error.response.data.field,  error.response.data.message);
-          addErrorMessage(error.response.data.message);
-        }
+        addFieldError(error.field,  error.message);
+        addErrorMessage(error.message);
       });
     }
   };
@@ -79,8 +75,8 @@ export default function User() {
       password: model.password,
       repeatPassword: model.repeatPassword,
       profile: model.profile,
-      storeId: model.store.id
     };
+    object.store = model.store;
 
     if (id) {
       object.id = id;

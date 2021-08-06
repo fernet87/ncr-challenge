@@ -17,7 +17,7 @@ export default function Stores(props) {
 
   useEffect(() => {
     getStores().then((stores) => {
-      const storeItemList = stores.data.map((store) =>
+      const storeItemList = stores.map((store) =>
         <div onClick={() => navigateToStore(store)} className="col-md-8 stores-container" key={store.number} >
           <div className="row" >
             <div className="col-md-3" >
