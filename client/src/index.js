@@ -10,7 +10,7 @@ import Header from './components/header';
 import { AlertMessageProvider } from './contexts/alert-message-context';
 import { FieldErrorProvider } from './contexts/field-error-context';
 import { UserProvider } from './contexts/user-context';
-import Login from './views/login/login';
+import Login from './views/login';
 import PageNotFound from "./views/page-not-found";
 import Stats from './views/stats/stats';
 import Stores from './views/stores/stores';
