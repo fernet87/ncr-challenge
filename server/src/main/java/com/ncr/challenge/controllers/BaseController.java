@@ -29,8 +29,8 @@ public class BaseController {
     return buildResponseEntity(responseBody);
   }
 
-  public <M extends BaseModel<E>, E extends BaseEntity> ResponseEntity<Response> responseOk(BaseEntity entity, Class<M> clazz) {
-    Response responseBody = new Response(HttpStatus.OK, convertEntityToModel((E) entity, clazz));
+  public <M extends BaseModel<E>, E extends BaseEntity> ResponseEntity<Response> responseOk(E entity, Class<M> clazz) {
+    Response responseBody = new Response(HttpStatus.OK, convertEntityToModel(entity, clazz));
     return buildResponseEntity(responseBody);
   }
     
@@ -39,11 +39,10 @@ public class BaseController {
     return buildResponseEntity(responseBody);
   }
 
-  public <M extends BaseModel<E>, E extends BaseEntity> ResponseEntity<Response> responseOk(Optional<? extends BaseEntity> optionalEntity, Class<M> clazz) {
+  public <M extends BaseModel<E>, E extends BaseEntity> ResponseEntity<Response> responseOk(Optional<E> optionalEntity, Class<M> clazz) {
     Response responseBody = new Response(HttpStatus.OK);
     if (!optionalEntity.isEmpty()) {
-      E m = (E) optionalEntity.get();
-      responseBody.setModel(convertEntityToModel(m, clazz));
+      responseBody.setModel(convertEntityToModel(optionalEntity.get(), clazz));
     }
     return buildResponseEntity(responseBody);
   }
