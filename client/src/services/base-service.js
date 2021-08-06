@@ -12,7 +12,12 @@ async function processRequest(promise) {
         resolve(data.model);
       }
     }).catch((error) => {
-      return error.response.data;
+      if (error.response) {
+        return error.response.data;
+      }
+      else {
+        return error.toJSON();
+      }
     }).then((errorData) => {
       if (errorData) {
         reject(errorData);
