@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 public class Response {
   private HttpStatus status;
   private Collection<? extends BaseModel<? extends BaseEntity>> model;
+  private boolean collection = false;
 
   public Response(HttpStatus status) {
     super();
@@ -43,10 +44,20 @@ public class Response {
 
   public void setModel(Collection<? extends BaseModel<? extends BaseEntity>> model) {
     this.model = model;
+    this.setCollection(true);
   }
   
   public <M extends BaseModel<? extends BaseEntity>> void setModel(M model) {
     this.model = Arrays.asList(model);
+    this.setCollection(false);
+  }
+
+  public boolean isCollection() {
+    return collection;
+  }
+
+  public void setCollection(boolean collection) {
+    this.collection = collection;
   }
 
 

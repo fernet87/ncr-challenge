@@ -57,7 +57,7 @@ export default function User() {
         responsePromise = createUser(createTransferObject());
       }
       responsePromise.then(user => {
-        addSuccessMessage("El usuario " + user[0].name + " fue " + ((update) ? "actualizado" : "creado") + " exitosamente.");
+        addSuccessMessage("El usuario " + user.name + " fue " + ((update) ? "actualizado" : "creado") + " exitosamente.");
         history.push('/Users', { store: model.store } );
       }).catch((error) => {
         addFieldError(error.field,  error.message);

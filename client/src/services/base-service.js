@@ -9,7 +9,14 @@ async function processRequest(promise) {
       return response.data;
     }).then((data) => {
       if (data.status.indexOf("OK") > -1) {
-        resolve(data.model);
+        let model;
+        if (data.collection) {
+          model = data.model;
+        }
+        else {
+          model = (data.model) ? data.model[0] : null;
+        }
+        resolve(model);
       }
     }).catch((error) => {
       if (error.response) {

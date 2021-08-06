@@ -17,7 +17,7 @@ export default function Stats() {
   function assignStats(storeId) {
     if (storeId > -1) {
       getStats(storeId).then((statistics) => {
-        setStats(statistics[0]);
+        setStats(statistics);
       });  
     }
   }
