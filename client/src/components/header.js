@@ -66,10 +66,10 @@ export default function Header({children}) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
-  const { user } = useUser();
+  const { session } = useUser();
 
   let items = [];
-  if (user) {
+  if (session) {
     items = [
       { id: 'Stores', url: '/Stores', text: 'Tiendas', icon: <StoreIcon />  },
       { id: 'Stats', url: '/Stats', text: 'Info de usuarios', icon: <InfoIcon /> }
@@ -89,7 +89,7 @@ export default function Header({children}) {
     setOpen(false);
   };
 
-
+  
   return (
     <div className={classes.root}>
       <CssBaseline />

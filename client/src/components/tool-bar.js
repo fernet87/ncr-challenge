@@ -69,7 +69,7 @@ function ToolBar(props) {
     setAnchorEl(null);
   };
 
-  const { user, logOut } = useUser();
+  const { session, logOut } = useUser();
   const handleMenuLogOut = () => {
     setAnchorEl(null);
     logOut();
@@ -115,7 +115,7 @@ function ToolBar(props) {
             NCR Challenge
           </Typography>
           <div className={classes.grow} />
-          { (user) ? 
+          { (session) ? 
             <div className={classes.sectionDesktop}>
               <IconButton
                 edge="end"
@@ -131,7 +131,7 @@ function ToolBar(props) {
           : '' }
         </Toolbar>
       </AppBar>
-      { (user) ? renderMenu : '' }
+      { (session) ? renderMenu : '' }
     </div>
   );
 }

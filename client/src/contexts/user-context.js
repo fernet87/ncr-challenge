@@ -6,29 +6,25 @@ import { useAlertMessage } from "./alert-message-context";
 import { useHistory } from "react-router";
 import { useFieldError } from "./field-error-context";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
-import jsSHA from "jssha";
 import configData from "./../config.json";
 import { logIn as logInCall } from "../services/login-service";
+import { getSession, getSessionObject, setSessionObject, destroySession } from "../services/session-service";
 
 const UserContext = React.createContext(() => {});
 
 export function UserProvider(props) {
-    const [token, setToken] = React.useState(null);
-    const [user, setUser] = React.useState(null);
     const { addFieldError, cleanFieldError } = useFieldError();
     const { addSuccessMessage, addErrorMessage } = useAlertMessage();
+    const [ session, setSession ] = React.useState(getSession());
     const history = useHistory();
 
     async function logIn(user, password) {
         cleanFieldError();
-        const shaObj = new jsSHA("SHA-256", "TEXT", { encoding: "UTF8" });
-        shaObj.update(password);
-        const hashedPassword = shaObj.getHash("HEX");
-        
-        logInCall({params: {user, password: hashedPassword}})
+
+        logInCall(user, password)
         .then((response) => {
-            setUser(response);
-            // setToken(response.token);
+            setSessionObject('user', response);
+            setSession(getSession());
             addSuccessMessage("Te logueaste exitosamente!");
             history.push("/Stores");
             return response;
@@ -41,12 +37,13 @@ export function UserProvider(props) {
     };
     
     function logOut() {
-        setUser(null);
-        setToken(null);
+        destroySession();
+        setSession(getSession());
         history.push("/Login");
     }
 
   const checkLogin = () => {
+    const user = getSessionObject('user');
     if (!configData.DEVELOP_MODE && !user) {
       return <Redirect to="/login" />;
     }
@@ -55,13 +52,12 @@ export function UserProvider(props) {
 
     const value = React.useMemo(() => {
         return ({
-            user,
-            token,
+            session,
             logIn,
             logOut,
             checkLogin
         });
-    }, [user, token]);
+    }, [session]);
 
     return <UserContext.Provider value={value} {...props} />
 }

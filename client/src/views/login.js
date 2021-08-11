@@ -10,7 +10,7 @@ const [USER, PASSWORD] = ['user', 'password'];
 
 export default function Login() {
   const { logIn } = useUser();
-
+  
   const doLogin = (userData) => {
     if (userData.user && userData.password) {
       logIn(userData.user, userData.password);
