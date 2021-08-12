@@ -9,7 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import { useUser } from '../contexts/user-context';
+import { useSession } from '../contexts/user-context';
 import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
@@ -69,7 +69,7 @@ function ToolBar(props) {
     setAnchorEl(null);
   };
 
-  const { session, logOut } = useUser();
+  const { session, logOut } = useSession();
   const handleMenuLogOut = () => {
     setAnchorEl(null);
     logOut();

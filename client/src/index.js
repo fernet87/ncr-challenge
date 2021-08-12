@@ -9,7 +9,7 @@ import AlertMessage from './components/alert-message/alert-message';
 import Header from './components/header';
 import { AlertMessageProvider } from './contexts/alert-message-context';
 import { FieldErrorProvider } from './contexts/field-error-context';
-import { UserProvider } from './contexts/user-context';
+import { SessionProvider } from './contexts/user-context';
 import Login from './views/login';
 import PageNotFound from "./views/page-not-found";
 import Stats from './views/stats/stats';
@@ -24,7 +24,7 @@ const routing = (
       <AlertMessage></AlertMessage>
       <FieldErrorProvider>
         <BrowserRouter>
-          <UserProvider>
+          <SessionProvider>
             <div className="container" >
               <Header />
               <div className="row justify-content-center">
@@ -51,7 +51,7 @@ const routing = (
                 </div>
               </div>
             </div>
-          </UserProvider>
+          </SessionProvider>
         </BrowserRouter>
       </FieldErrorProvider>
     </AlertMessageProvider>

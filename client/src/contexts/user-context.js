@@ -10,9 +10,9 @@ import configData from "./../config.json";
 import { logIn as logInCall } from "../services/login-service";
 import { getSession, getSessionObject, setSessionObject, destroySession } from "../services/session-service";
 
-const UserContext = React.createContext(() => {});
+const SessionContext = React.createContext(() => {});
 
-export function UserProvider(props) {
+export function SessionProvider(props) {
     const { addFieldError, cleanFieldError } = useFieldError();
     const { addSuccessMessage, addErrorMessage } = useAlertMessage();
     const [ session, setSession ] = React.useState(getSession());
@@ -22,12 +22,12 @@ export function UserProvider(props) {
         cleanFieldError();
 
         logInCall(user, password)
-        .then((response) => {
-            setSessionObject('user', response);
+        .then((user) => {
+            setSessionObject('user', user);
             setSession(getSession());
             addSuccessMessage("Te logueaste exitosamente!");
             history.push("/Stores");
-            return response;
+            return user;
         })
         .catch((error) => {
             addFieldError(error.field,  error.message);
@@ -59,14 +59,14 @@ export function UserProvider(props) {
         });
     }, [session]);
 
-    return <UserContext.Provider value={value} {...props} />
+    return <SessionContext.Provider value={value} {...props} />
 }
 
-export function useUser() {
-    const context = React.useContext(UserContext);
+export function useSession() {
+    const context = React.useContext(SessionContext);
 
     if (!context) {
-        throw new Error('useUser should be inside the provider UserContext');
+        throw new Error('useSession should be inside the provider SessionContext');
     }
 
     return context;

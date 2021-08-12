@@ -1,8 +1,8 @@
 import './App.css';
-import { useUser } from './contexts/user-context';
+import { useSession } from './contexts/user-context';
 
 function App() {
-  const { checkLogin } = useUser();
+  const { checkLogin } = useSession();
 
   return (
     <div>

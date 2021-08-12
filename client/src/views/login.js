@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useUser } from "../contexts/user-context";
+import { useSession } from "../contexts/user-context";
 import PanelForm from "../components/panel-form";
 import TextField from "../components/controls/fields/input/text-field";
 import PasswordField from "../components/controls/fields/input/password-field";
@@ -9,7 +9,7 @@ import SubmitButton from "../components/controls/buttons/submit-button";
 const [USER, PASSWORD] = ['user', 'password'];
 
 export default function Login() {
-  const { logIn } = useUser();
+  const { logIn } = useSession();
   
   const doLogin = (userData) => {
     if (userData.user && userData.password) {

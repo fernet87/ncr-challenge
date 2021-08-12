@@ -2,14 +2,14 @@ import React, { useEffect } from "react";
 import AngularGaugeChart from "../../components/charts/angular-gauge-chart/angular-gauge-chart";
 import SelectField from "../../components/controls/fields/select/select-field";
 import PanelForm from "../../components/panel-form";
-import { useUser } from "../../contexts/user-context";
+import { useSession } from "../../contexts/user-context";
 import { getStats } from "../../services/stats-service";
 import { getStores } from "../../services/store-service";
 import './stats.css';
 
 
 export default function Stats() {
-  const { checkLogin } = useUser();
+  const { checkLogin } = useSession();
   const [stores, setStores] = React.useState([]);
   const [stats, setStats] = React.useState({});
   let model = {store: 1};

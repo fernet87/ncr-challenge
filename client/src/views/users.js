@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useHistory, useLocation } from "react-router";
 import AlertDialog from "../components/alert-dialog";
-import { useUser } from "../contexts/user-context";
+import { useSession } from "../contexts/user-context";
 import { useAlertMessage } from "../contexts/alert-message-context";
 import { deleteUser, findUsersByStore } from '../services/user-service';
 import Panel from "../components/panel/panel";
@@ -18,7 +18,7 @@ const columns =  [
 export default function Users() {
   const history = useHistory();
   const location = useLocation();
-  const { checkLogin } = useUser();
+  const { checkLogin } = useSession();
   const { addSuccessMessage, addErrorMessage } = useAlertMessage();
   const [userItems, setUserItems] = React.useState([]);
   const [show, setShow] = React.useState(false);

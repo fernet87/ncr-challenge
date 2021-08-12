@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router";
-import { useUser } from "../../contexts/user-context";
+import { useSession } from "../../contexts/user-context";
 import { getStores } from "../../services/store-service";
 import Panel from "../../components/panel/panel";
 import "./stores.css";
 
 export default function Stores(props) {
   const history = useHistory();
-  const { checkLogin } = useUser();
+  const { checkLogin } = useSession();
 
   function navigateToStore(store) {
     history.push('/Users', { store: store } );

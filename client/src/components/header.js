@@ -16,7 +16,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ToolBar from './tool-bar';
 import { Link } from 'react-router-dom';
 import { MenuItem } from '@material-ui/core';
-import { useUser } from '../contexts/user-context';
+import { useSession } from '../contexts/user-context';
 
 const drawerWidth = 240;
 
@@ -66,7 +66,7 @@ export default function Header({children}) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
-  const { session } = useUser();
+  const { session } = useSession();
 
   let items = [];
   if (session) {

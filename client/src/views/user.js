@@ -9,7 +9,7 @@ import SelectField from "../components/controls/fields/select/select-field";
 import PanelForm from "../components/panel-form";
 import { useAlertMessage } from "../contexts/alert-message-context";
 import { useFieldError } from "../contexts/field-error-context";
-import { useUser } from "../contexts/user-context";
+import { useSession } from "../contexts/user-context";
 import { createUser, updateUser } from "../services/user-service";
 
 const [
@@ -32,7 +32,7 @@ const [
 
 export default function User() {
   const history = useHistory();
-  const { checkLogin } = useUser();
+  const { checkLogin } = useSession();
   const [update, setUpdate] = React.useState(false);
   const { addSuccessMessage, addErrorMessage } = useAlertMessage();
   const { addFieldError, cleanFieldError } = useFieldError();
