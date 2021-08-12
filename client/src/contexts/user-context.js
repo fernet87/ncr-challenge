@@ -4,7 +4,7 @@
 import React from "react";
 import { useAlertMessage } from "./alert-message-context";
 import { useHistory } from "react-router";
-import { useFieldError } from "./field-error-context";
+import { useError } from "./field-error-context";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import configData from "./../config.json";
 import { logIn as logInCall } from "../services/login-service";
@@ -13,7 +13,7 @@ import { getSession, getSessionObject, setSessionObject, destroySession } from "
 const SessionContext = React.createContext(() => {});
 
 export function SessionProvider(props) {
-    const { addFieldError, cleanFieldError } = useFieldError();
+    const { addFieldError, cleanFieldError } = useError();
     const { addSuccessMessage, addErrorMessage } = useAlertMessage();
     const [ session, setSession ] = React.useState(getSession());
     const history = useHistory();

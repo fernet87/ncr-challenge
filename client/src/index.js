@@ -8,7 +8,7 @@ import App from './App';
 import AlertMessage from './components/alert-message/alert-message';
 import Header from './components/header';
 import { AlertMessageProvider } from './contexts/alert-message-context';
-import { FieldErrorProvider } from './contexts/field-error-context';
+import { ErrorProvider } from './contexts/field-error-context';
 import { SessionProvider } from './contexts/user-context';
 import Login from './views/login';
 import PageNotFound from "./views/page-not-found";
@@ -22,7 +22,7 @@ const routing = (
   <React.StrictMode>
     <AlertMessageProvider>
       <AlertMessage></AlertMessage>
-      <FieldErrorProvider>
+      <ErrorProvider>
         <BrowserRouter>
           <SessionProvider>
             <div className="container" >
@@ -53,7 +53,7 @@ const routing = (
             </div>
           </SessionProvider>
         </BrowserRouter>
-      </FieldErrorProvider>
+      </ErrorProvider>
     </AlertMessageProvider>
   </React.StrictMode>
 );

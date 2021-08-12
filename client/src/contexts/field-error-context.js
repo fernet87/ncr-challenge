@@ -1,34 +1,34 @@
 import React from "react";
 
-const FieldErrorContext = React.createContext(() => {});
+const ErrorContext = React.createContext(() => {});
 
-export function FieldErrorProvider(props) {
-    const [fieldErrorData, setFieldErrorData] = React.useState({ field: null, message: '' });
+export function ErrorProvider(props) {
+    const [fieldError, setFieldError] = React.useState({ field: null, message: '' });
 
     function addFieldError(field, message) {
-        setFieldErrorData({ field: field, message: message });
+        setFieldError({ field: field, message: message });
     };
 
     function cleanFieldError() {
-        setFieldErrorData({ field: null, message: '' });
+        setFieldError({ field: null, message: '' });
     }
 
     const value = React.useMemo(() => {
         return ({
-            fieldErrorData,
+            fieldError: fieldError,
             cleanFieldError,
             addFieldError
         });
-    }, [fieldErrorData]);
+    }, [fieldError]);
 
-    return <FieldErrorContext.Provider value={value} {...props} />
+    return <ErrorContext.Provider value={value} {...props} />
 }
 
-export function useFieldError() {
-    const context = React.useContext(FieldErrorContext);
+export function useError() {
+    const context = React.useContext(ErrorContext);
 
     if (!context) {
-        throw new Error('useFieldError should be inside the provider FieldErrorContext');
+        throw new Error('useError should be inside the provider ErrorContext');
     }
 
     return context;

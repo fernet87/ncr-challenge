@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
-import { useFieldError } from "../../../../contexts/field-error-context";
+import { useError } from "../../../../contexts/field-error-context";
 import { toCamelCase } from "../../../../utils/string-utils";
 import './input-field.css'
 
 // props: register, type, attr, label, required, validationObject
 export default function InputField(props) {
   const { register, formState: { errors } } = useFormContext();
-  const { fieldErrorData } = useFieldError();
+  const { fieldError } = useError();
 
   const getId = () => {
     return 'input-' + props.attr;
@@ -40,7 +40,7 @@ export default function InputField(props) {
 
   const updateErrorClasses = () => {
     if (field) {
-      if ((errors && errors[props.attr]) || (fieldErrorData.field === props.attr)) {
+      if ((errors && errors[props.attr]) || (fieldError.field === props.attr)) {
         field.classList.add("is-invalid");
       }
       else {
@@ -51,7 +51,7 @@ export default function InputField(props) {
   
   useEffect(() => {
     handleErrorClasses();
-  }, [value, fieldErrorData]);
+  }, [value, fieldError]);
 
   let validationObject = (props.validationObject) ? props.validationObject : {};
   if (props.required) {
@@ -110,7 +110,7 @@ export default function InputField(props) {
       <div className="error-message" >
         {(errors && errors[props.attr]) ? 
           errors[props.attr].message :
-          ((fieldErrorData.field === props.attr) ? fieldErrorData.message : '')
+          ((fieldError.field === props.attr) ? fieldError.message : '')
         }
       </div>
       <label htmlFor="floatingInput">{props.label}</label>
