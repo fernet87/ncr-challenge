@@ -7,7 +7,6 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import App from './App';
 import AlertMessage from './components/alert-message';
-import Header from './components/header';
 import { AlertMessageProvider } from './contexts/alert-message-context';
 import { ErrorProvider } from './contexts/field-error-context';
 import { SessionProvider } from './contexts/user-context';
