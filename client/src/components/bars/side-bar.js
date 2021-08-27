@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useSession } from "../../contexts/user-context";
 import styled from 'styled-components'
 
-const StyledIcon = styled.div`
+const StyledSideBar = styled.div`
   width: 280px;
   height: 100%;
   position: absolute;
@@ -85,7 +85,7 @@ export default function SideBar(props) {
   }, [currentItem]);
 
   return (
-    <StyledIcon className="d-flex flex-column flex-shrink-0 p-3 bg-light sidebar" >
+    <StyledSideBar className="d-flex flex-column flex-shrink-0 p-3 bg-light sidebar" >
       <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
         <Icon fontName={props.icon} ></Icon>
         <span className="fs-4">{props.title}</span>
@@ -107,6 +107,6 @@ export default function SideBar(props) {
           <li><a className="dropdown-item" href="#" onClick={logOut} >Sign out</a></li>
         </ul>
       </div>
-    </StyledIcon>
+    </StyledSideBar>
   );
 }
