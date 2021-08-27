@@ -7,6 +7,7 @@ import useNavigationItems, { updateActiveItem } from "../../hooks/navigation-ite
 import Icon from "../icon";
 
 const StyledSideBar = styled.div`
+  z-index: 1000;
   height: calc(100% - 61px);
   position: absolute;
   &.small {

@@ -15,15 +15,15 @@ code {
 
 .footer {
   position: absolute;
-  height: 88px;
+  height: 68px;
   padding-top: 15px;
   padding-bottom: 15px;
-  padding-left: 270px;
+  padding-left: 300px;
   bottom: 0;
   width: 100%;
   z-index: -1;
 }
 
 .developed-by {
-  padding-top: 20px;
+  padding-top: 8px;
 }
