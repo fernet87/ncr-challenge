@@ -1,0 +1,14 @@
+.sidebar {
+  width: 280px;
+  height: 100%;
+  position: absolute;
+}
+
+.nav-item {
+  margin-bottom: 5px;
+}
+
+.nav-link:hover {
+  background-color: gray;
+  color: white;
+}

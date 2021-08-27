@@ -1,0 +1,52 @@
+import { useState } from "react";
+import { useSession } from "../contexts/user-context";
+
+const itemList = [
+  { id: 'Stores', url: '/Stores', text: 'Tiendas', icon: 'shop' },
+  { id: 'Stats', url: '/Stats', text: 'Info de usuarios', icon: 'info-circle' },
+  { id: 'Login', url: '/Login', text: 'Login', icon: 'people' },
+  { id: 'Logout', text: 'Log out', icon: 'box-arrow-left' }
+];
+
+const storesItem = itemList.find((item) => { return item.id === 'Stores'; });
+const statsItem = itemList.find((item) => { return item.id === 'Stats'; });
+const loginItem = itemList.find((item) => { return item.id === 'Login'; });
+const logoutItem = itemList.find((item) => { return item.id === 'Logout'; });
+
+export const updateActiveItem = (itemList, defaultValue) => {
+  itemList.forEach(itemInLoop => {
+    itemInLoop.active = false;
+  });
+
+  if (defaultValue) {
+    const item = itemList.filter((itemToFilter) => { return itemToFilter.id === defaultValue.id; })[0];
+    if (item) {
+      item.active = true;
+    }
+  }
+  else {
+    itemList[0].active = true;
+  }    
+}
+
+export default function useNavigationItems(defaultValue) {
+  const { session, logOut } = useSession();
+
+  // Actions
+  logoutItem.action = logOut;
+  
+  // Conditions
+  storesItem.condition = () => { return session };
+  statsItem.condition = () => { return session };
+  loginItem.condition = () => { return !session };
+  logoutItem.condition = () => { return session };
+
+  const [navigationItems, setNavigationItems] = useState(null);
+
+  if (!navigationItems) {
+    setNavigationItems(itemList);
+    updateActiveItem(itemList, storesItem);
+  }
+
+  return [navigationItems, setNavigationItems];
+};

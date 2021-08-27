@@ -1,0 +1,20 @@
+.icon {
+  color: black;
+  font-size: 25px;
+}
+
+.icon:active {
+  color: white;
+}
+
+.icon.small {
+  font-size: 18px;
+}
+
+.icon.medium {
+  font-size: 25px;
+}
+
+.icon.large {
+  font-size: 35px;
+}
