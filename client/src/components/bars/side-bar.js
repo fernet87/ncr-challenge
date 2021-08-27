@@ -1,18 +1,41 @@
-import Icon from "../../icon/icon";
-import './side-bar.css';
-import useNavigationItems, { updateActiveItem } from "../../../hooks/navigation-items"
+import Icon from "../icon";
+import useNavigationItems, { updateActiveItem } from "../../hooks/navigation-items"
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from "react";
-import { useSession } from "../../../contexts/user-context";
+import { useSession } from "../../contexts/user-context";
+import styled from 'styled-components'
+
+const StyledIcon = styled.div`
+  width: 280px;
+  height: 100%;
+  position: absolute;
+`;
+
+const StyledNavLink = styled(Link)`
+  cursor: pointer;
+  
+  &:hover {
+    background-color: gray;
+    color: white;
+  }
+`;
+
+const StyledNavItem = styled.li`
+  margin-bottom: 5px;
+`;
 
 export default function SideBar(props) {
-  const { logOut } = useSession();
+  const { session, logOut } = useSession();
   const [navigationItems, setNavigationItems] = useNavigationItems();
   const [currentItem, setCurrentItem] = useState(null);
 
   const getActiveClass = (item) => {
     return (item.active) ? "active" : "link-dark";
   };
+
+  const getUserName = () => {
+    return (session) ? session.user.name + " " + session.user.lastName : null;
+  }
 
   const onItemClick = (item) => {
     if (item.action) {
@@ -30,20 +53,20 @@ export default function SideBar(props) {
         {
           navigationItems.map((item, index) => (
             (!item.condition || (item.condition && item.condition())) ? 
-              <li key={item.id} className="nav-item" >
+              <StyledNavItem key={item.id} className="nav-item" >
                 {
                   (item.url) ?
-                    <Link className={"nav-link " + getActiveClass(item)} to={item.url} onClick={() => { onItemClick(item) }} >
+                    <StyledNavLink className={"nav-link " + getActiveClass(item)} to={item.url} onClick={() => { onItemClick(item) }} >
                       <Icon fontName={item.icon} small ></Icon>
                       {item.text}
-                    </Link>
+                    </StyledNavLink>
                   :
                     <a className={"nav-link " + getActiveClass(item)} onClick={() => { onItemClick(item) }} >
                       <Icon fontName={item.icon} small ></Icon>
                       {item.text}
                     </a>
                 }
-              </li>
+              </StyledNavItem>
             : 
               null
             )
@@ -62,7 +85,7 @@ export default function SideBar(props) {
   }, [currentItem]);
 
   return (
-    <div className="d-flex flex-column flex-shrink-0 p-3 bg-light sidebar" >
+    <StyledIcon className="d-flex flex-column flex-shrink-0 p-3 bg-light sidebar" >
       <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
         <Icon fontName={props.icon} ></Icon>
         <span className="fs-4">{props.title}</span>
@@ -73,17 +96,17 @@ export default function SideBar(props) {
       </ul>
       <hr/>
       <div className="dropdown">
-        <a href="#" className="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+        <span className="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
           <Icon fontName="person-circle" medium></Icon>
-          <strong>mdo</strong>
-        </a>
-        <ul className="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+          <strong>{getUserName()}</strong>
+        </span>
+        <ul className="dropdown-menu text-small shadow" aria-labelledby="dropdownUser">
           <li><a className="dropdown-item" href="#">Settings</a></li>
           <li><a className="dropdown-item" href="#">Profile</a></li>
           <li><hr className="dropdown-divider" /></li>
           <li><a className="dropdown-item" href="#" onClick={logOut} >Sign out</a></li>
         </ul>
       </div>
-    </div>
+    </StyledIcon>
   );
 }

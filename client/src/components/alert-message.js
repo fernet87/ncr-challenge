@@ -1,6 +1,23 @@
 import React from "react";
-import { useAlertMessage } from "../../contexts/alert-message-context";
-import './alert-message.css'
+import { useAlertMessage } from "../contexts/alert-message-context";
+import styled from 'styled-components'
+
+const StyledAlertMessage = styled.div`
+  // floating
+  float: right;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+
+  // btn-floating
+  float: right;
+  right: 20px;
+
+  // alert-server
+  margin-bottom: 0;
+  border-radius: 10px;
+`;
+
 
 export default function AlertMessage() {
   const { messageObject, cleanMessage } = useAlertMessage();
@@ -25,10 +42,10 @@ export default function AlertMessage() {
   }, 5000);
 
   const alertMessage = (
-    <div className={"alert floating alert-server alert-" + messageObject.severity} onClose={onCloseAlertMessage} role="alert">
+    <StyledAlertMessage className={"alert floating alert-server alert-" + messageObject.severity} onClose={onCloseAlertMessage} role="alert">
       { messageObject.message }
       <button type="button" className="btn-close btn-floating" data-bs-dismiss="alert" aria-label="Close" onClick={onCloseAlertMessage} ></button>
-    </div>
+    </StyledAlertMessage>
   );
   
   return (

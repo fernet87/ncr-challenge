@@ -10,6 +10,8 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.1",
+    "styled-components": "^5.3.1",
+    "beautiful-react-hooks": "^0.35.0",
     "bootstrap": "^5.0.2",
     "bootstrap-icons": "^1.5.0",
     "jssha": "^3.2.0",

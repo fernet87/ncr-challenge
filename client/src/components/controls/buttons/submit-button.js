@@ -1,3 +1,9 @@
+import styled from 'styled-components'
+
+const StyledButton = styled.button`
+  margin-top: 10px;
+  margin-bottom: 10px;
+`;
 
 export default function SubmitButton(props) {
 
@@ -11,6 +17,6 @@ export default function SubmitButton(props) {
   };
 
   return (
-    <button type="submit" className={getClasses()} disabled={props.disabled}>{ props.label }</button>
+    <StyledButton type="submit" className={getClasses()} disabled={props.disabled}>{ props.label }</StyledButton>
   );
 }

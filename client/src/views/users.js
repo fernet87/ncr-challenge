@@ -4,8 +4,8 @@ import AlertDialog from "../components/alert-dialog";
 import { useSession } from "../contexts/user-context";
 import { useAlertMessage } from "../contexts/alert-message-context";
 import { deleteUser, findUsersByStore } from '../services/user-service';
-import Panel from "../components/panel/panel";
-import Icon from '../components/icon/icon';
+import Panel from "../components/panel";
+import Icon from '../components/icon';
 
 
 const columns =  [

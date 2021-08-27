@@ -1,12 +1,19 @@
 import React, { useEffect } from "react";
-import AngularGaugeChart from "../../components/charts/angular-gauge-chart/angular-gauge-chart";
-import SelectField from "../../components/controls/fields/select/select-field";
-import PanelForm from "../../components/panel-form";
-import { useSession } from "../../contexts/user-context";
-import { getStats } from "../../services/stats-service";
-import { getStores } from "../../services/store-service";
-import './stats.css';
+import AngularGaugeChart from "../components/charts/angular-gauge-chart";
+import SelectField from "../components/controls/fields/select/select-field";
+import PanelForm from "../components/panel-form";
+import { useSession } from "../contexts/user-context";
+import { getStats } from "../services/stats-service";
+import { getStores } from "../services/store-service";
+import styled from 'styled-components'
 
+const StyledQuantityStats = styled.div`
+  padding-top: 6px;
+`;
+
+const StyledPercentageStats = styled.div`
+  text-align: center;
+`;
 
 export default function Stats() {
   const { checkLogin } = useSession();
@@ -51,7 +58,7 @@ export default function Stats() {
             required >
           </SelectField>
         </div>
-        <div className="col-md-6 quantity-stats">
+        <StyledQuantityStats className="col-md-6">
           <div className="row">
             <div className="col-md-12">
               <h5>Cantidad de cajeros: { stats.numberOfCashiers } </h5>
@@ -62,15 +69,15 @@ export default function Stats() {
               <h5>Cantidad de supervisores: { stats.numberOfSupervisors } </h5>
             </div>
           </div>
-        </div>
+        </StyledQuantityStats>
       </div>
       <div className="row">
-        <div className="col-md-6 percentage-stats">
+        <StyledPercentageStats className="col-md-6">
           <p>Porcentaje de cajeros sobre el total de usuarios: { stats.percentageOfCashiersOverTotalUsers }% </p>
-        </div>
-        <div className="col-md-6 percentage-stats">
+        </StyledPercentageStats>
+        <StyledPercentageStats className="col-md-6">
           <p>Porcentaje de supervisores sobre el total de usuarios: { stats.percentageOfSupervisorsOverTotalUsers }% </p>
-        </div>
+        </StyledPercentageStats>
       </div>
       <div className="row">
         <div className="col-md-6">

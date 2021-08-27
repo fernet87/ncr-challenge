@@ -5,18 +5,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import App from './App';
-import AlertMessage from './components/alert-message/alert-message';
+import AlertMessage from './components/alert-message';
 import Header from './components/header';
 import { AlertMessageProvider } from './contexts/alert-message-context';
 import { ErrorProvider } from './contexts/field-error-context';
 import { SessionProvider } from './contexts/user-context';
 import Login from './views/login';
 import PageNotFound from "./views/page-not-found";
-import Stats from './views/stats/stats';
-import Stores from './views/stores/stores';
+import Stats from './views/stats';
+import Stores from './views/stores';
 import User from './views/user';
 import Users from './views/users';
 import reportWebVitals from './reportWebVitals';
+import NavBar from './components/bars/nav-bar/nav-bar';
+import SideBar from './components/bars/side-bar';
 
 const routing = (
   <React.StrictMode>
@@ -25,8 +27,10 @@ const routing = (
       <ErrorProvider>
         <BrowserRouter>
           <SessionProvider>
+            {/* <Header /> */}
+            {/* <NavBar title="NCR Challenge" /> */}
+            <SideBar title="NCR Challenge" icon="cart3" ></SideBar>
             <div className="container" >
-              <Header />
               <div className="row justify-content-center">
                 <div className="col">
                   <Switch>

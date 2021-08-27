@@ -1,4 +1,10 @@
 import { useFormContext } from "react-hook-form";
+import styled from 'styled-components'
+
+const StyledFormSelect = styled.select`
+  margin-top: 10px;
+  margin-bottom: 10px;
+`;
 
 // props: register, attr, label, options
 export default function SelectField(props) {
@@ -23,7 +29,7 @@ export default function SelectField(props) {
   }
 
   return (
-    <select
+    <StyledFormSelect
       {...methods.register(props.attr)}
       id={getId(props.attr)}
       className="form-select form-select-lg mb-4"
@@ -31,6 +37,6 @@ export default function SelectField(props) {
       onChange={onChange}>
       {/* <option>{props.label}</option> */}
       { getOptions() }
-    </select>
+    </StyledFormSelect>
   );
 }
