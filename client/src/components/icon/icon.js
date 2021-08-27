@@ -54,6 +54,6 @@ export default function Icon(props) {
   });
   
   return (
-    <span className={"icon bi bi-" + props.fontName + " " + size} style={{ color: props.color }} ></span>
+    <span className={"icon bi bi-" + props.fontName + " " + size} style={{ color: props.color }} onClick={props.onClick} ></span>
   );
 }

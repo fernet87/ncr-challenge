@@ -5,6 +5,7 @@ import { useSession } from "../contexts/user-context";
 import { useAlertMessage } from "../contexts/alert-message-context";
 import { deleteUser, findUsersByStore } from '../services/user-service';
 import Panel from "../components/panel/panel";
+import Icon from '../components/icon/icon';
 
 
 const columns =  [
@@ -73,7 +74,7 @@ export default function Users() {
             <td>{user.mail}</td>
             <td>{getProfileDescription(user.profile)}</td>
             <td className="fs-4 mb-3">
-              <i className="bi bi-trash-fill" onClick={() => removeUser(user)}></i>
+              <Icon fontName="trash-fill" medium onClick={() => removeUser(user)} ></Icon>
             </td>
           </tr>
         );
@@ -113,7 +114,7 @@ export default function Users() {
               <th scope="col" key={column.id}>{column.label}</th>
             ))}
             <th scope="col" className="fs-4 mb-3">
-              <i className="bi bi-plus" onClick={() => createUser()}></i>
+              <Icon fontName="plus" medium onClick={() => createUser()} ></Icon>
             </th>
           </tr>
         </thead>

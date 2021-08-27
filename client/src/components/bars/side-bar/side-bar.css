@@ -4,6 +4,10 @@
   position: absolute;
 }
 
+.nav-link {
+  cursor: pointer;
+}
+
 .nav-item {
   margin-bottom: 5px;
 }
