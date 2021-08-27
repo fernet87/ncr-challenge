@@ -4,14 +4,12 @@ import { useSession } from "../contexts/user-context";
 const itemList = [
   { id: 'Stores', path: '/Stores', text: 'Tiendas', icon: 'shop' },
   { id: 'Stats', path: '/Stats', text: 'Info de usuarios', icon: 'info-circle' },
-  { id: 'Login', path: '/Login', text: 'Login', icon: 'people' },
-  { id: 'Logout', text: 'Log out', icon: 'box-arrow-left' }
+  { id: 'Login', path: '/Login', text: 'Login', icon: 'people' }
 ];
 
 const storesItem = itemList.find((item) => { return item.id === 'Stores'; });
 const statsItem = itemList.find((item) => { return item.id === 'Stats'; });
 const loginItem = itemList.find((item) => { return item.id === 'Login'; });
-const logoutItem = itemList.find((item) => { return item.id === 'Logout'; });
 
 export const updateActiveItem = (itemList, defaultValue) => {
   itemList.forEach(itemInLoop => {
@@ -31,15 +29,11 @@ export const updateActiveItem = (itemList, defaultValue) => {
 
 export default function useNavigationItems(defaultValue) {
   const { session, logOut } = useSession();
-
-  // Actions
-  logoutItem.action = logOut;
   
   // Conditions
   storesItem.condition = () => { return session };
   statsItem.condition = () => { return session };
   loginItem.condition = () => { return !session };
-  logoutItem.condition = () => { return session };
 
   const [navigationItems, setNavigationItems] = useState(null);
 

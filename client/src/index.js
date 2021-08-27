@@ -1,5 +1,6 @@
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.js';
 import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -17,8 +18,9 @@ import Stores from './views/stores';
 import User from './views/user';
 import Users from './views/users';
 import reportWebVitals from './reportWebVitals';
-import NavBar from './components/bars/nav-bar/nav-bar';
+import NavBar from './components/bars/nav-bar';
 import SideBar from './components/bars/side-bar';
+import { BarsProvider } from './contexts/bars-context';
 
 const routing = (
   <React.StrictMode>
@@ -27,9 +29,10 @@ const routing = (
       <ErrorProvider>
         <BrowserRouter>
           <SessionProvider>
-            {/* <Header /> */}
-            {/* <NavBar title="NCR Challenge" /> */}
-            <SideBar title="NCR Challenge" icon="cart3" ></SideBar>
+            <BarsProvider>
+              <NavBar title="NCR Challenge" />
+              <SideBar icon="cart3" ></SideBar>
+            </BarsProvider>
             <div className="container" >
               <div className="row justify-content-center">
                 <div className="col">
