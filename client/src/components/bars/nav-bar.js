@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { Link } from "react-router-dom";
+import styled from 'styled-components';
+import { useBars } from "../../contexts/bars-context";
 import { useSession } from "../../contexts/user-context";
 import useNavigationItems from "../../hooks/navigation-items";
 import Icon from "../icon";
 // import { useGlobalEvent, useDebouncedFn } from "beautiful-react-hooks";
-import styled from 'styled-components'
-import { useBars } from "../../contexts/bars-context";
 
 const StyledNavToggler = styled.button`
   background-color: #0d6efd;
@@ -18,7 +18,7 @@ const StyledNavText = styled.a`
   position: absolute; 
 `;
 
-const StyledNavItem = styled.li`
+const StyledNavItem = styled(Link)`
   background-color: #3f51b5;  
   border-radius: 10px;
   cursor: pointer;
@@ -76,12 +76,12 @@ export default function NavBar(props) {
         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
           {navigationItems.map((item, index) => (
             (!item.condition || (item.condition && item.condition())) ? 
-              <StyledNavItem to={item.url} key={item.id} >
+              <StyledNavItem to={item.path} key={item.id} >
                 <div className="d-inline-block align-text-top" >
                   <StyledNavItemLeft className="fs-4" >
-                    <Icon fontName={item.icon} medium ></Icon>
+                    <Icon fontName={item.icon} medium color="#fff" ></Icon>
                   </StyledNavItemLeft>
-                  <StyledNavItemRight className="nav-item-right nav-item-text nav-link active" aria-current="page" href={item.url} >{item.text}</StyledNavItemRight>
+                  <StyledNavItemRight className="nav-item-right nav-item-text nav-link active" aria-current="page" href={item.path} >{item.text}</StyledNavItemRight>
                 </div>
               </StyledNavItem>
             : 

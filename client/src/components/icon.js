@@ -8,7 +8,6 @@ const StyledIcon = styled.span(props => {
   const DARK_COLOR = "black";
   const LIGHT_COLOR = "white";
   return `
-    color: black;
     font-size: 25px;
     cursor: pointer;
     padding: 8px;

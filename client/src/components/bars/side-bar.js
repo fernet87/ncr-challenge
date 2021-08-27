@@ -1,16 +1,16 @@
-import Icon from "../icon";
-import useNavigationItems, { updateActiveItem } from "../../hooks/navigation-items"
-import { Link } from 'react-router-dom';
 import { useEffect, useState } from "react";
-import { useSession } from "../../contexts/user-context";
-import styled from 'styled-components'
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 import { useBars } from "../../contexts/bars-context";
+import { useSession } from "../../contexts/user-context";
+import useNavigationItems, { updateActiveItem } from "../../hooks/navigation-items";
+import Icon from "../icon";
 
 const StyledSideBar = styled.div`
   height: calc(100% - 61px);
   position: absolute;
   &.small {
-    width: 115px;
+    width: 90px;
   }
   &.large {
     width: 280px;
@@ -24,6 +24,10 @@ const StyledNavLink = styled(Link)`
     background-color: gray;
     color: white;
   }
+
+  &.side-bar-close {
+    padding: 0.5rem;
+  }
 `;
 
 const StyledNavAnchor = styled.a`
@@ -33,16 +37,15 @@ const StyledNavAnchor = styled.a`
     background-color: gray;
     color: white;
   }
+
+  &.side-bar-close {
+    padding: 0.5rem;
+  }
 `;
 
 const StyledNavItem = styled.li`
   margin-bottom: 5px;
 `;
-
-const StyledNavProfile = styled.a`
-  padding-left: 1rem;
-`;
-
 
 export default function SideBar(props) {
   const { session, logOut } = useSession();
@@ -52,6 +55,10 @@ export default function SideBar(props) {
 
   const getActiveClass = (item) => {
     return (item.active) ? "active" : "link-dark";
+  };
+
+  const getSideBarOpenClass = () => {
+    return (sidebarOpen) ? 'side-bar-open' : 'side-bar-close';
   };
 
   const getUserName = () => {
@@ -77,12 +84,12 @@ export default function SideBar(props) {
               <StyledNavItem key={item.id} className="nav-item" >
                 {
                   (item.path) ?
-                    <StyledNavLink className={"nav-link " + getActiveClass(item)} to={item.path} onClick={() => { onItemClick(item) }} >
-                      <Icon fontName={item.icon} size={ (sidebarOpenMode) ? 'small' : 'large' } ></Icon>
+                    <StyledNavLink className={"nav-link " + getActiveClass(item) + " " + getSideBarOpenClass()} to={item.path} onClick={() => { onItemClick(item) }} >
+                      <Icon fontName={item.icon} size={ (sidebarOpenMode) ? 'small' : 'medium' } ></Icon>
                       { (sidebarOpenMode) ? item.text : null }
                     </StyledNavLink>
                   :
-                    <StyledNavAnchor className={"nav-link " + getActiveClass(item)} onClick={() => { onItemClick(item) }} >
+                    <StyledNavAnchor className={"nav-link " + getActiveClass(item) + " " + getSideBarOpenClass()} onClick={() => { onItemClick(item) }} >
                       <Icon fontName={item.icon} small ></Icon>
                       {item.text}
                     </StyledNavAnchor>
@@ -125,10 +132,10 @@ export default function SideBar(props) {
         </ul>
         <hr/>
         <div className="dropdown">
-          <StyledNavProfile href="#" className="d-flex align-items-center link-dark text-decoration-none" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+          <a href="#" className="d-flex align-items-center link-dark text-decoration-none" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
             <Icon fontName="person-circle" size={ (sidebarOpen) ? 'medium' : 'large' }></Icon>
             { (sidebarOpen) ? <strong>{getUserName()}</strong> : null }
-          </StyledNavProfile>
+          </a>
           <ul className="dropdown-menu text-small shadow" aria-labelledby="dropdownUser">
             <li><a className="dropdown-item" href="#">Settings</a></li>
             <li><a className="dropdown-item" href="#">Profile</a></li>
