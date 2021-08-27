@@ -1,4 +1,3 @@
-import './App.css';
 import { useSession } from './contexts/user-context';
 
 function App() {

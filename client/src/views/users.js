@@ -6,7 +6,15 @@ import { useAlertMessage } from "../contexts/alert-message-context";
 import { deleteUser, findUsersByStore } from '../services/user-service';
 import Panel from "../components/panel";
 import Icon from '../components/icon';
+import styled from 'styled-components'
 
+const StyledTD = styled.td`
+  vertical-align: middle;
+`;
+
+const StyledTH = styled.th`
+  vertical-align: middle;
+`;
 
 const columns =  [
   { id: 'name', label: 'Nombre' },
@@ -66,16 +74,16 @@ export default function Users() {
       findUsersByStore(storeId).then((users) => {
         const userItemList = users.map((user) =>
           <tr  key={user.user} >
-            <th scope="row">
+            <StyledTH scope="row">
               <a href="#" onClick={() => updateUser(user)} >{user.name}</a>
-            </th>
-            <td>{user.lastName}</td>
-            <td>{user.user}</td>
-            <td>{user.mail}</td>
-            <td>{getProfileDescription(user.profile)}</td>
-            <td className="fs-4 mb-3">
+            </StyledTH>
+            <StyledTD>{user.lastName}</StyledTD>
+            <StyledTD>{user.user}</StyledTD>
+            <StyledTD>{user.mail}</StyledTD>
+            <StyledTD>{getProfileDescription(user.profile)}</StyledTD>
+            <StyledTD className="fs-4 mb-3">
               <Icon fontName="trash-fill" medium onClick={() => removeUser(user)} ></Icon>
-            </td>
+            </StyledTD>
           </tr>
         );
         setUserItems(userItemList);
@@ -111,11 +119,11 @@ export default function Users() {
         <thead>
           <tr>
             {columns.map((column) => (
-              <th scope="col" key={column.id}>{column.label}</th>
+              <StyledTH scope="col" key={column.id}>{column.label}</StyledTH>
             ))}
-            <th scope="col" className="fs-4 mb-3">
+            <StyledTH scope="col" className="fs-4 mb-3">
               <Icon fontName="plus" medium onClick={() => createUser()} ></Icon>
-            </th>
+            </StyledTH>
           </tr>
         </thead>
         <tbody>
