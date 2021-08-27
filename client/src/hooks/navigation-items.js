@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useSession } from "../contexts/user-context";
 
 const itemList = [
-  { id: 'Stores', url: '/Stores', text: 'Tiendas', icon: 'shop' },
-  { id: 'Stats', url: '/Stats', text: 'Info de usuarios', icon: 'info-circle' },
-  { id: 'Login', url: '/Login', text: 'Login', icon: 'people' },
+  { id: 'Stores', path: '/Stores', text: 'Tiendas', icon: 'shop' },
+  { id: 'Stats', path: '/Stats', text: 'Info de usuarios', icon: 'info-circle' },
+  { id: 'Login', path: '/Login', text: 'Login', icon: 'people' },
   { id: 'Logout', text: 'Log out', icon: 'box-arrow-left' }
 ];
 
@@ -44,8 +44,9 @@ export default function useNavigationItems(defaultValue) {
   const [navigationItems, setNavigationItems] = useState(null);
 
   if (!navigationItems) {
+    const currentItem = itemList.find((item) => { return item.path === window.location.pathname; });
     setNavigationItems(itemList);
-    updateActiveItem(itemList, storesItem);
+    updateActiveItem(itemList, currentItem);
   }
 
   return [navigationItems, setNavigationItems];

@@ -20,6 +20,15 @@ const StyledNavLink = styled(Link)`
   }
 `;
 
+const StyledNavAnchor = styled.a`
+  cursor: pointer;
+  
+  &:hover {
+    background-color: gray;
+    color: white;
+  }
+`;
+
 const StyledNavItem = styled.li`
   margin-bottom: 5px;
 `;
@@ -55,16 +64,16 @@ export default function SideBar(props) {
             (!item.condition || (item.condition && item.condition())) ? 
               <StyledNavItem key={item.id} className="nav-item" >
                 {
-                  (item.url) ?
-                    <StyledNavLink className={"nav-link " + getActiveClass(item)} to={item.url} onClick={() => { onItemClick(item) }} >
+                  (item.path) ?
+                    <StyledNavLink className={"nav-link " + getActiveClass(item)} to={item.path} onClick={() => { onItemClick(item) }} >
                       <Icon fontName={item.icon} small ></Icon>
                       {item.text}
                     </StyledNavLink>
                   :
-                    <a className={"nav-link " + getActiveClass(item)} onClick={() => { onItemClick(item) }} >
+                    <StyledNavAnchor className={"nav-link " + getActiveClass(item)} onClick={() => { onItemClick(item) }} >
                       <Icon fontName={item.icon} small ></Icon>
                       {item.text}
-                    </a>
+                    </StyledNavAnchor>
                 }
               </StyledNavItem>
             : 
