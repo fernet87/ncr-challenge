@@ -7,13 +7,15 @@ import com.ncr.challenge.entities.BaseEntity;
 
 import org.modelmapper.ModelMapper;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 public class BaseModel<T extends BaseEntity> {
   private static ModelMapper modelMapper = new ModelMapper();
 
   private Long id;
-    
-  public BaseModel() {
-  }
 
   public BaseModel(T entity) {
     map(entity);
@@ -39,14 +41,6 @@ public class BaseModel<T extends BaseEntity> {
     }
     
     return BaseModel.modelMapper.map(this, genericClassParameter.getClass());
-  }
-  
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
   }
   
 }
