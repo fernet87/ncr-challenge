@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSession } from "../contexts/user-context";
+import useReactPath from "./path-name";
 
 const itemList = [
   { id: 'Stores', path: '/Stores', text: 'Tiendas', icon: 'shop' },
@@ -11,13 +12,19 @@ const storesItem = itemList.find((item) => { return item.id === 'Stores'; });
 const statsItem = itemList.find((item) => { return item.id === 'Stats'; });
 const loginItem = itemList.find((item) => { return item.id === 'Login'; });
 
+export const findActiveItem = (itemList) => {
+  return itemList.find((item) => { return item.path === window.location.pathname; });   
+}
+
 export const updateActiveItem = (itemList, defaultValue) => {
+  const activeItem = findActiveItem(itemList);
+
   itemList.forEach(itemInLoop => {
     itemInLoop.active = false;
   });
 
-  if (defaultValue) {
-    const item = itemList.filter((itemToFilter) => { return itemToFilter.id === defaultValue.id; })[0];
+  if (activeItem) {
+    const item = itemList.filter((itemToFilter) => { return itemToFilter.id === activeItem.id; })[0];
     if (item) {
       item.active = true;
     }
@@ -28,7 +35,8 @@ export const updateActiveItem = (itemList, defaultValue) => {
 }
 
 export default function useNavigationItems(defaultValue) {
-  const { session, logOut } = useSession();
+  const { session } = useSession();
+  const pathname = useReactPath();
   
   // Conditions
   storesItem.condition = () => { return session };
@@ -38,10 +46,15 @@ export default function useNavigationItems(defaultValue) {
   const [navigationItems, setNavigationItems] = useState(null);
 
   if (!navigationItems) {
-    const currentItem = itemList.find((item) => { return item.path === window.location.pathname; });
     setNavigationItems(itemList);
+    const currentItem = findActiveItem(itemList);
     updateActiveItem(itemList, currentItem);
   }
+  
+  useEffect(() => {
+    const currentItem = findActiveItem(navigationItems);
+    updateActiveItem(navigationItems, currentItem);
+  }, [pathname, navigationItems])
 
   return [navigationItems, setNavigationItems];
 };

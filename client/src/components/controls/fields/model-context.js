@@ -3,22 +3,23 @@ import React from "react";
 const ModelContext = React.createContext(() => {});
 
 export function ModelProvider(props) {
-  function set(attr, value) {
-    if (props.model) {
-      props.model[attr] = value;
-    }
-  };
 
-  function get(attr) {
-    return (props.model) ? props.model[attr] : undefined;
-  }
 
   const value = React.useMemo(() => {
+    function set(attr, value) {
+      if (props.model) {
+        props.model[attr] = value;
+      }
+    };
+  
+    function get(attr) {
+      return (props.model) ? props.model[attr] : undefined;
+    }
     return ({
       set,
       get
     });
-  }, []);
+  }, [props.model]);
 
   return <ModelContext.Provider value={value} {...props} />
 }

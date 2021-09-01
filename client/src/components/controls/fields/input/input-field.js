@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { useError } from "../../../../contexts/error-context";
 import { toCamelCase } from "../../../../utils/string-utils";
@@ -18,39 +18,50 @@ const StyledFormControl = styled.input`
   margin-bottom: 10px;
 `;
 
-
 // props: register, type, attr, label, required, validationObject
 export default function InputField(props) {
   const { register, setValue, formState: { errors } } = useFormContext();
   const { fieldError } = useError();
   const model = useModel();
-    
-  useEffect(() => {
-    setValue(props.attr, model.get(props.attr));
-  });
 
-  useEffect(() => {
-    handleErrorClasses();
-  }, [fieldError]);
-
-  const getId = () => {
+  const getId = useCallback(() => {
     return 'input-' + props.attr;
-  }
+  }, [props.attr]);
 
-  const getField = () => {
+  const getField = useCallback(() => {
     return document.getElementById(getId());
-  }
+  }, [getId]);
 
-  const getValue = () => {
+  const getValue = useCallback(() => {
     let field = getField();
     return (field) ? field.value : null;
-  }
+  }, [getField]);
 
   const updateField = () => {
     model.set(props.attr, getValue());
   }
-  
-  const handleErrorClasses = () => {
+
+  const cleanErrorClasses = useCallback(() => {
+    let field = getField();
+    if (field) {
+      field.classList.remove("is-invalid");
+      field.classList.remove("is-valid");
+    }
+  }, [getField]);
+
+  const updateErrorClasses = useCallback(() => {
+    let field = getField();
+    if (field) {
+      if ((errors && errors[props.attr]) || (fieldError.field === props.attr)) {
+        field.classList.add("is-invalid");
+      }
+      else {
+        field.classList.add("is-valid");
+      }
+    }
+  }, [getField, errors, fieldError, props.attr]);
+
+  const handleErrorClasses = useCallback(() => {
     if (getValue()) {
       cleanErrorClasses();
       updateErrorClasses();
@@ -63,27 +74,15 @@ export default function InputField(props) {
         cleanErrorClasses();
       }
     }
-  }
+  }, [getValue, cleanErrorClasses, updateErrorClasses, errors, props.attr]);
+    
+  useEffect(() => {
+    setValue(props.attr, model.get(props.attr));
+  });
 
-  const cleanErrorClasses = () => {
-    let field = getField();
-    if (field) {
-      field.classList.remove("is-invalid");
-      field.classList.remove("is-valid");
-    }
-  }
-
-  const updateErrorClasses = () => {
-    let field = getField();
-    if (field) {
-      if ((errors && errors[props.attr]) || (fieldError.field === props.attr)) {
-        field.classList.add("is-invalid");
-      }
-      else {
-        field.classList.add("is-valid");
-      }
-    }
-  }
+  useEffect(() => {
+    handleErrorClasses();
+  }, [handleErrorClasses, fieldError]);
 
   let validationObject = (props.validationObject) ? props.validationObject : {};
   if (props.required) {
@@ -120,7 +119,7 @@ export default function InputField(props) {
     };
   }
   if (props.type === 'mail') {
-    const pattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$";
+    let pattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$";
     if (props.pattern) {
       pattern = props.pattern;
     }

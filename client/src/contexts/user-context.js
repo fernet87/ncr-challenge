@@ -42,13 +42,13 @@ export function SessionProvider(props) {
         history.push("/Login");
     }
 
-  const checkLogin = () => {
-    const user = getSessionObject('user');
-    if (!configData.DEVELOP_MODE && !user) {
-      return <Redirect to="/login" />;
+    const checkLogin = () => {
+        const user = getSessionObject('user');
+        if (!configData.DEVELOP_MODE && !user) {
+        return <Redirect to="/login" />;
+        }
+        return <></>;
     }
-    return <></>;
-  }
 
     const value = React.useMemo(() => {
         return ({

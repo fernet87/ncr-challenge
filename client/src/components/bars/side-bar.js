@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useBars } from "./bars-context";
 import { useSession } from "../../contexts/user-context";
-import useNavigationItems, { updateActiveItem } from "../../hooks/navigation-items";
+import useNavigationItems from "../../hooks/navigation-items";
 import Icon from "../icon";
+import useReactPath from "../../hooks/path-name";
 
 const StyledSideBar = styled.div`
   z-index: 1000;
@@ -51,67 +52,63 @@ const StyledNavItem = styled.li`
 export default function SideBar(props) {
   const { session, logOut } = useSession();
   const [navigationItems] = useNavigationItems();
-  const [currentItem, setCurrentItem] = useState(null);
+  const [itemList, setItemList] = useState({items: (<></>)});
   const {sidebarOpen} = useBars();
-
-  const getActiveClass = (item) => {
-    return (item.active) ? "active" : "link-dark";
-  };
-
-  const getSideBarOpenClass = () => {
-    return (sidebarOpen) ? 'side-bar-open' : 'side-bar-close';
-  };
+  const pathname = useReactPath();
 
   const getUserName = () => {
     return (session) ? session.user.name + " " + session.user.lastName : null;
   }
 
-  const onItemClick = (item) => {
+  const getActiveClass = useCallback((item) => {
+    return (item.active) ? "active" : "link-dark";
+  }, []);
+
+  const getSideBarOpenClass = useCallback(() => {
+    return (sidebarOpen) ? 'side-bar-open' : 'side-bar-close';
+  }, [sidebarOpen]);
+
+  const onItemClick = useCallback((item) => {
     if (item.action) {
       item.action();
     }
+  }, []);
 
-    setCurrentItem(item);
-    updateActiveItem(navigationItems, item);
-  };
-
-  const updateItems = (sidebarOpenMode) => {
+  const updateItems = useCallback((sidebarOpenMode) => {
     if (navigationItems) {
-      itemsDom = (
-        <ul className="nav nav-pills flex-column mb-auto">
-        {
-          navigationItems.map((item, index) => (
-            (!item.condition || (item.condition && item.condition())) ? 
-              <StyledNavItem key={item.id} className="nav-item" >
-                {
-                  (item.path) ?
-                    <StyledNavLink className={"nav-link " + getActiveClass(item) + " " + getSideBarOpenClass()} to={item.path} onClick={() => { onItemClick(item) }} >
-                      <Icon fontName={item.icon} size={ (sidebarOpenMode) ? 'small' : 'medium' } ></Icon>
-                      { (sidebarOpenMode) ? item.text : null }
-                    </StyledNavLink>
-                  :
-                    <StyledNavAnchor className={"nav-link " + getActiveClass(item) + " " + getSideBarOpenClass()} onClick={() => { onItemClick(item) }} >
-                      <Icon fontName={item.icon} small ></Icon>
-                      {item.text}
-                    </StyledNavAnchor>
-                }
-              </StyledNavItem>
-            : 
-              null
-            )
-          )
-        }
-      </ul>
-      );
+      setItemList({items: (
+          <ul className="nav nav-pills flex-column mb-auto">
+            {
+              navigationItems.map((item, index) => (
+                (!item.condition || (item.condition && item.condition())) ? 
+                  <StyledNavItem key={item.id} className="nav-item" >
+                    {
+                      (item.path) ?
+                        <StyledNavLink className={"nav-link " + getActiveClass(item) + " " + getSideBarOpenClass()} to={item.path} onClick={() => { onItemClick(item) }} >
+                          <Icon fontName={item.icon} size={ (sidebarOpenMode) ? 'small' : 'medium' } ></Icon>
+                          { (sidebarOpenMode) ? item.text : null }
+                        </StyledNavLink>
+                      :
+                        <StyledNavAnchor className={"nav-link " + getActiveClass(item) + " " + getSideBarOpenClass()} onClick={() => { onItemClick(item) }} >
+                          <Icon fontName={item.icon} small ></Icon>
+                          {item.text}
+                        </StyledNavAnchor>
+                    }
+                  </StyledNavItem>
+                : 
+                  null
+                )
+              )
+            }
+          </ul>
+        )
+      });
     }
-  };
-
-  let itemsDom;
-  updateItems(sidebarOpen);
+  }, [navigationItems, setItemList, getActiveClass, getSideBarOpenClass, onItemClick]);
 
   useEffect(() => {
     updateItems(sidebarOpen);
-  }, [currentItem]);
+  }, [pathname, updateItems, sidebarOpen]);
 
   return (
     <div>
@@ -129,7 +126,7 @@ export default function SideBar(props) {
             null
         }
         <ul className="nav nav-pills flex-column mb-auto">
-          {itemsDom}
+          {itemList.items}
         </ul>
         <hr/>
         <div className="dropdown">

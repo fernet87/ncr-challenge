@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import styled from 'styled-components'
 
-const DARK_COLOR = "black";
-const LIGHT_COLOR = "white";
+// const DARK_COLOR = "black";
+// const LIGHT_COLOR = "white";
 
 const StyledIcon = styled.span(props => {
-  const DARK_COLOR = "black";
+  // const DARK_COLOR = "black";
   const LIGHT_COLOR = "white";
   return `
     font-size: 25px;

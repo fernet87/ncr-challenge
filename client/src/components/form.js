@@ -8,25 +8,25 @@ export default function Form(props) {
   const [model] = useState(props.model);
 
   useEffect(() => {
-    setFocus();
-  });
-
-  const setFocus = () => {
-    let firstFocuseableField;
-    Object.entries(methods.getValues()).forEach((item) => {
-      let fieldFound = false;
-      let fieldTypes = ["input", "select"];
-      fieldTypes.forEach((fieldType) => {
-        if (!fieldFound && document.getElementById(fieldType + "-" + item[0])) {
-          fieldFound = true;
+    const setFocus = () => {
+      let firstFocuseableField;
+      Object.entries(methods.getValues()).forEach((item) => {
+        let fieldFound = false;
+        let fieldTypes = ["input", "select"];
+        fieldTypes.forEach((fieldType) => {
+          if (!fieldFound && document.getElementById(fieldType + "-" + item[0])) {
+            fieldFound = true;
+          }
+        });
+        if (!firstFocuseableField && fieldFound) {
+          firstFocuseableField = item[0];
         }
       });
-      if (!firstFocuseableField && fieldFound) {
-        firstFocuseableField = item[0];
-      }
-    });
-    methods.setFocus(firstFocuseableField);    
-  }
+      methods.setFocus(firstFocuseableField);    
+    }
+
+    setFocus();
+  }, [methods]);
 
   const onSubmit = (event) => {
     if (props.model) {

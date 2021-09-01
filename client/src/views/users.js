@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useHistory, useLocation } from "react-router";
+import { Link } from 'react-router-dom';
 import AlertDialog from "../components/alert-dialog";
 import { useSession } from "../contexts/user-context";
 import { useAlertMessage } from "../contexts/alert-message-context";
@@ -50,32 +51,28 @@ export default function Users() {
   const getTitle = () => {
     return (!location.state || !location.state.store) ? "" : "Usuarios de la tienda " + location.state.store.name;
   }
-  
-  const updateUser = (user) => {
-    history.push('/User', user);
-  };
 
   const createUser = () => {
     history.push('/User', { store: location.state.store, profile: 1 });
   }
 
-  const removeUser = (user) => {
+  const deleteUserAlert = useCallback(() => {
+    setShow(true);
+  }, [setShow]);
+
+  const removeUser = useCallback((user) => {
     setUserToBeDeleted(user)
     deleteUserAlert()
-  }
+  }, [deleteUserAlert, setUserToBeDeleted]);
 
-  function deleteUserAlert() {
-    setShow(true);
-  };
-
-  function refreshTable() {
+  const refreshTable = useCallback(() => {
     let storeId = (!location.state) ? -1 : location.state.store.id;
     if (storeId > -1) {
       findUsersByStore(storeId).then((users) => {
         const userItemList = users.map((user) =>
           <tr  key={user.user} >
             <StyledTH scope="row">
-              <a href="#" onClick={() => updateUser(user)} >{user.name}</a>
+              <Link to={{pathname: "/User", state: user}} >{user.name}</Link>
             </StyledTH>
             <StyledTD>{user.lastName}</StyledTD>
             <StyledTD>{user.user}</StyledTD>
@@ -89,11 +86,11 @@ export default function Users() {
         setUserItems(userItemList);
       });  
     }
-  }
+  }, [location, removeUser]);
 
   useEffect(() => {
     refreshTable();
-  }, []);
+  }, [refreshTable]);
 
   useEffect(() => {
     if (alertConfirmation) {
@@ -110,7 +107,7 @@ export default function Users() {
         });
       }
     }
-  }, [alertConfirmation]);
+  }, [alertConfirmation, userToBeDeleted, refreshTable, setAlertConfirmation, addSuccessMessage, addErrorMessage]);
 
   return (
     <Panel title={getTitle()} size="large" >

@@ -36,14 +36,13 @@ const StyledText = styled.span`
 export default function Stores(props) {
   const history = useHistory();
   const { checkLogin } = useSession();
-
-  function navigateToStore(store) {
-    history.push('/Users', { store: store } );
-  };
-
   const [storeItems, setStoreItems] = React.useState([]);
 
   useEffect(() => {
+    function navigateToStore(store) {
+      history.push('/Users', { store: store } );
+    };
+  
     getStores().then((stores) => {
       const storeItemList = stores.map((store) =>
         <StyledContainer onClick={() => navigateToStore(store)} className="col-md-8" key={store.number} >
@@ -61,7 +60,7 @@ export default function Stores(props) {
       );
       setStoreItems(storeItemList);
     });
-  }, []);
+  }, [setStoreItems, history]);
 
   return (
     <Panel title="Tiendas" size="small" >
