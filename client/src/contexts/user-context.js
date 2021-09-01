@@ -17,47 +17,47 @@ export function SessionProvider(props) {
     const { addSuccessMessage, addErrorMessage } = useAlertMessage();
     const [ session, setSession ] = React.useState(getSession());
     const history = useHistory();
-
-    async function logIn(user, password) {
-        cleanFieldError();
-
-        logInCall(user, password)
-        .then((user) => {
-            setSessionObject('user', user);
-            setSession(getSession());
-            addSuccessMessage("Te logueaste exitosamente!");
-            history.push("/Stores");
-            return user;
-        })
-        .catch((error) => {
-            addFieldError(error.field,  error.message);
-            addErrorMessage(error.message);
-            return error;
-        });
-    };
     
-    function logOut() {
-        destroySession();
-        setSession(getSession());
-        history.push("/Login");
-    }
-
-    const checkLogin = () => {
-        const user = getSessionObject('user');
-        if (!configData.DEVELOP_MODE && !user) {
-        return <Redirect to="/login" />;
-        }
-        return <></>;
-    }
-
     const value = React.useMemo(() => {
+        const logIn = async function(user, password) {
+            cleanFieldError();
+    
+            logInCall(user, password)
+            .then((user) => {
+                setSessionObject('user', user);
+                setSession(getSession());
+                addSuccessMessage("Te logueaste exitosamente!");
+                history.push("/Stores");
+                return user;
+            })
+            .catch((error) => {
+                addFieldError(error.field,  error.message);
+                addErrorMessage(error.message);
+                return error;
+            });
+        };
+        
+        const logOut = () => {
+            destroySession();
+            setSession(getSession());
+            history.push("/Login");
+        }
+    
+        const checkLogin = () => {
+            const user = getSessionObject('user');
+            if (!configData.DEVELOP_MODE && !user) {
+            return <Redirect to="/login" />;
+            }
+            return <></>;
+        }
+
         return ({
             session,
             logIn,
             logOut,
             checkLogin
         });
-    }, [session]);
+    }, [session, addErrorMessage, addFieldError, addSuccessMessage, cleanFieldError, history]);
 
     return <SessionContext.Provider value={value} {...props} />
 }
