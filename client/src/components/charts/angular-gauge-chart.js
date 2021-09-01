@@ -2,6 +2,7 @@ import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import styled from 'styled-components'
+import { useEffect } from "react";
 
 const StyledAngularGaugeChart = styled.div`
   width: 100%;
@@ -9,8 +10,7 @@ const StyledAngularGaugeChart = styled.div`
 `;
 
 export default function AngularGaugeChart(props) {
-  am4core.ready(function() {
-
+  useEffect(() => {
     // Themes begin
     am4core.useTheme(am4themes_animated);
     // Themes end
@@ -61,8 +61,11 @@ export default function AngularGaugeChart(props) {
         hand.showValue(props.value, 1000, am4core.ease.cubicOut);
       }
     }
-    
-  }); // end am4core.ready()
+
+    return () => {
+      chart.dispose();
+    };
+  });
 
   return (
     <StyledAngularGaugeChart id={props.id} ></StyledAngularGaugeChart>
