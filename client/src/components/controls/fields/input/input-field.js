@@ -78,7 +78,7 @@ export default function InputField(props) {
     
   useEffect(() => {
     setValue(props.attr, model.get(props.attr));
-  }, []);
+  }, [setValue, props.attr, model]);
 
   useEffect(() => {
     handleErrorClasses();
