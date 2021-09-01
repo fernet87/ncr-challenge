@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import styled from 'styled-components'
+import { useModel } from "../model-context";
 
 const StyledFormSelect = styled.select`
   margin-top: 10px;
@@ -8,12 +10,26 @@ const StyledFormSelect = styled.select`
 
 // props: register, attr, label, options
 export default function SelectField(props) {
-  const methods = useFormContext();
+  const { register, setValue } = useFormContext();
+  const model = useModel();
+
+  useEffect(() => {
+    setValue(props.attr, model.get(props.attr));
+  });
 
   const getId = () => {
     return 'select-' + props.attr;
   }
 
+  const getField = () => {
+    return document.getElementById(getId());
+  }
+
+  const getValue = () => {
+    let field = getField();
+    return (field) ? field.value : null;
+  }
+  
   const getOptions = () => {
     return (props.options.map((option) =>
       <option value={option.value} key={option.value} >{option.label}</option>
@@ -21,16 +37,18 @@ export default function SelectField(props) {
   }
 
   const onChange = () => {
-    console.log(methods.getValues("store"))
-    
+    let value = getValue();
+    model.set(props.attr, value);
+    setValue(props.attr, model.get(props.attr));
+
     if (props.onChange) {
-      props.onChange(document.getElementById(getId()).value);
+      props.onChange(value);
     }
   }
 
   return (
     <StyledFormSelect
-      {...methods.register(props.attr)}
+      {...register(props.attr)}
       id={getId(props.attr)}
       className="form-select form-select-lg mb-4"
       required={props.required}

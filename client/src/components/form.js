@@ -1,25 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
+import { ModelProvider } from "./controls/fields/model-context";
 
-// props: onSubmit
+// props: model, onSubmit
 export default function Form(props) {
   const methods = useForm({ defaultValues: props.model });
+  const [model] = useState(props.model);
 
-  const updateInputAttributes = () => {
-    if (props.model) {
-      Object.entries(props.model).forEach((modelEntry) => {
-        methods.setValue(modelEntry[0], modelEntry[1])
-      });
-    }
-  }
-
-  const updateOutputAttributes = () => {
-    if (props.model) {
-      Object.entries(methods.getValues()).forEach((item) => {
-        props.model[item[0]] = item[1];
-      });
-    }    
-  }
+  useEffect(() => {
+    setFocus();
+  });
 
   const setFocus = () => {
     let firstFocuseableField;
@@ -38,26 +28,21 @@ export default function Form(props) {
     methods.setFocus(firstFocuseableField);    
   }
 
-  useEffect(() => {
-    setFocus();
-  }, []);
-
-  useEffect(() => {
-    updateInputAttributes();
-  }, [props.model]);
-
-  const onBeforeSubmit = () => {
-    updateOutputAttributes();
-    if (!props.model) {
-      console.warn("Model was not defined.")
+  const onSubmit = (event) => {
+    if (props.model) {
+      Object.assign(props.model, model);
     }
+    methods.handleSubmit(props.onSubmit)();
+    event.preventDefault();
   }
 
   return (
-    <FormProvider {...methods} >
-      <form onClick={onBeforeSubmit} onSubmit={methods.handleSubmit(props.onSubmit)}>
-        {props.children}
-      </form>
-    </FormProvider>
+    <ModelProvider model={model} >
+      <FormProvider {...methods} >
+        <form onSubmit={onSubmit}>
+          {props.children}
+        </form>
+      </FormProvider>
+    </ModelProvider>
   );
 }

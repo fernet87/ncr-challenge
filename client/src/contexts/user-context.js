@@ -4,7 +4,7 @@
 import React from "react";
 import { useAlertMessage } from "./alert-message-context";
 import { useHistory } from "react-router";
-import { useError } from "./field-error-context";
+import { useError } from "./error-context";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import configData from "./../config.json";
 import { logIn as logInCall } from "../services/login-service";

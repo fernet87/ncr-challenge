@@ -31,7 +31,6 @@ export default function Stats() {
 
   function onStoreChange(storeId) {
     assignStats(storeId);
-    model.store = parseInt(storeId);
   }
 
   useEffect(() => {

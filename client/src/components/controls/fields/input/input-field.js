@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
-import { useError } from "../../../../contexts/field-error-context";
+import { useError } from "../../../../contexts/error-context";
 import { toCamelCase } from "../../../../utils/string-utils";
 import styled from 'styled-components'
+import { useModel } from "../model-context";
 
 const StyledErrorMessage = styled.div`
   color: red;
@@ -20,18 +21,37 @@ const StyledFormControl = styled.input`
 
 // props: register, type, attr, label, required, validationObject
 export default function InputField(props) {
-  const { register, formState: { errors } } = useFormContext();
+  const { register, setValue, formState: { errors } } = useFormContext();
   const { fieldError } = useError();
+  const model = useModel();
+    
+  useEffect(() => {
+    setValue(props.attr, model.get(props.attr));
+  });
+
+  useEffect(() => {
+    handleErrorClasses();
+  }, [fieldError]);
 
   const getId = () => {
     return 'input-' + props.attr;
   }
-  
-  let field = document.getElementById(getId());
-  let value = (field) ? field.value : null;
+
+  const getField = () => {
+    return document.getElementById(getId());
+  }
+
+  const getValue = () => {
+    let field = getField();
+    return (field) ? field.value : null;
+  }
+
+  const updateField = () => {
+    model.set(props.attr, getValue());
+  }
   
   const handleErrorClasses = () => {
-    if (value) {
+    if (getValue()) {
       cleanErrorClasses();
       updateErrorClasses();
     }
@@ -46,6 +66,7 @@ export default function InputField(props) {
   }
 
   const cleanErrorClasses = () => {
+    let field = getField();
     if (field) {
       field.classList.remove("is-invalid");
       field.classList.remove("is-valid");
@@ -53,6 +74,7 @@ export default function InputField(props) {
   }
 
   const updateErrorClasses = () => {
+    let field = getField();
     if (field) {
       if ((errors && errors[props.attr]) || (fieldError.field === props.attr)) {
         field.classList.add("is-invalid");
@@ -62,10 +84,6 @@ export default function InputField(props) {
       }
     }
   }
-  
-  useEffect(() => {
-    handleErrorClasses();
-  }, [value, fieldError]);
 
   let validationObject = (props.validationObject) ? props.validationObject : {};
   if (props.required) {
@@ -120,6 +138,7 @@ export default function InputField(props) {
         className='form-control'
         id={getId()}
         placeholder={toCamelCase(props.attr)}
+        onBlur={updateField}
       />
       <StyledErrorMessage>
         {(errors && errors[props.attr]) ? 

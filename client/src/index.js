@@ -8,7 +8,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import App from './App';
 import AlertMessage from './components/alert-message';
 import { AlertMessageProvider } from './contexts/alert-message-context';
-import { ErrorProvider } from './contexts/field-error-context';
+import { ErrorProvider } from './contexts/error-context';
 import { SessionProvider } from './contexts/user-context';
 import Login from './views/login';
 import PageNotFound from "./views/page-not-found";
@@ -19,7 +19,7 @@ import Users from './views/users';
 import reportWebVitals from './reportWebVitals';
 import NavBar from './components/bars/nav-bar';
 import SideBar from './components/bars/side-bar';
-import { BarsProvider } from './contexts/bars-context';
+import { BarsProvider } from './components/bars/bars-context';
 
 const routing = (
   <React.StrictMode>

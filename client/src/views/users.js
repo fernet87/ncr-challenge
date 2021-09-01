@@ -56,7 +56,7 @@ export default function Users() {
   };
 
   const createUser = () => {
-    history.push('/User', { store: location.state.store });
+    history.push('/User', { store: location.state.store, profile: 1 });
   }
 
   const removeUser = (user) => {

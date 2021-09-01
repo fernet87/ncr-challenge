@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
-import { useBars } from "../../contexts/bars-context";
+import { useBars } from "./bars-context";
 import { useSession } from "../../contexts/user-context";
 import useNavigationItems from "../../hooks/navigation-items";
 import Icon from "../icon";
