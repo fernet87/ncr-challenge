@@ -50,7 +50,7 @@ const StyledNavItem = styled.li`
 
 export default function SideBar(props) {
   const { session, logOut } = useSession();
-  const [navigationItems, setNavigationItems] = useNavigationItems();
+  const [navigationItems] = useNavigationItems();
   const [currentItem, setCurrentItem] = useState(null);
   const {sidebarOpen} = useBars();
 
@@ -119,7 +119,7 @@ export default function SideBar(props) {
         {
           (props.title) ?
             <div>
-              <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+              <a href="/#" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
                 <Icon fontName={props.icon} ></Icon>
                 <span className="fs-4">{props.title}</span>
               </a>
@@ -133,15 +133,15 @@ export default function SideBar(props) {
         </ul>
         <hr/>
         <div className="dropdown">
-          <a href="#" className="d-flex align-items-center link-dark text-decoration-none" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+          <a href="/#" className="d-flex align-items-center link-dark text-decoration-none" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
             <Icon fontName="person-circle" size={ (sidebarOpen) ? 'medium' : 'large' }></Icon>
             { (sidebarOpen) ? <strong>{getUserName()}</strong> : null }
           </a>
           <ul className="dropdown-menu text-small shadow" aria-labelledby="dropdownUser">
-            <li><a className="dropdown-item" href="#">Settings</a></li>
-            <li><a className="dropdown-item" href="#">Profile</a></li>
+            <li><a className="dropdown-item" href="/#">Settings</a></li>
+            <li><a className="dropdown-item" href="/#">Profile</a></li>
             <li><hr className="dropdown-divider" /></li>
-            <li><a className="dropdown-item" href="#" onClick={logOut} >Sign out</a></li>
+            <li><a className="dropdown-item" href="/#" onClick={logOut} >Sign out</a></li>
           </ul>
         </div>
       </StyledSideBar>

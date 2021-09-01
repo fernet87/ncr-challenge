@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
 import { useBars } from "./bars-context";
-import { useSession } from "../../contexts/user-context";
 import useNavigationItems from "../../hooks/navigation-items";
 import Icon from "../icon";
 // import { useGlobalEvent, useDebouncedFn } from "beautiful-react-hooks";
@@ -54,17 +53,17 @@ const StyledNavSection = styled.div`
 `;
 
 export default function NavBar(props) {
-  const { logOut } = useSession();
+  // const { logOut } = useSession();
   const [navigationItems] = useNavigationItems();
   const {sidebarOpen, setSidebarOpen} = useBars();
 
-  const handleMenuLogOut = () => {
-    logOut();
-  }
+  // const handleMenuLogOut = () => {
+  //   logOut();
+  // }
 
-  const checkRenderLogOut = () => {
-    return window.innerWidth < 1400 && sidebarOpen;
-  }
+  // const checkRenderLogOut = () => {
+  //   return window.innerWidth < 1400 && sidebarOpen;
+  // }
 
   const onSidebarButtonClick = () => {
     setSidebarOpen(!sidebarOpen);
