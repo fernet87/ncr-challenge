@@ -40,7 +40,7 @@ const StyledNavItemLeft = styled.div`
     position: relative;
 `;
 
-const StyledNavItemRight = styled.a`
+const StyledNavItemRight = styled.span`
     display: inline-block;
 
     // text
@@ -81,7 +81,7 @@ export default function NavBar(props) {
                   <StyledNavItemLeft className="fs-4" >
                     <Icon fontName={item.icon} medium color="#fff" ></Icon>
                   </StyledNavItemLeft>
-                  <StyledNavItemRight className="nav-item-right nav-item-text nav-link active" aria-current="page" href={item.path} >{item.text}</StyledNavItemRight>
+                  <StyledNavItemRight className="nav-link active" aria-current="page" href={item.path} >{item.text}</StyledNavItemRight>
                 </div>
               </StyledNavItem>
             : 
