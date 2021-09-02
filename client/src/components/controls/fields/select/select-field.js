@@ -19,7 +19,7 @@ export default function SelectField(props) {
   }
 
   const getField = () => {
-    return fieldRef.current.getElementsByClassName("form-select")[0];
+    return fieldRef.current.getElementsByClassName("field")[0];
   }
 
   const getValue = () => {
@@ -52,7 +52,7 @@ export default function SelectField(props) {
       {...register(props.attr)}
       id={getId(props.attr)}
       ref={fieldRef}
-      className="form-select form-select-lg mb-4"
+      className="field form-select form-select-lg mb-4"
       required={props.required}
       onChange={onChange}>
       {/* <option>{props.label}</option> */}

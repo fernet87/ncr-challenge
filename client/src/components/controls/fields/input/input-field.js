@@ -30,7 +30,7 @@ export default function InputField(props) {
   };
 
   const getField = useCallback(() => {
-    return fieldRef.current.getElementsByClassName("form-control")[0];
+    return fieldRef.current.getElementsByClassName("field")[0];
   }, [fieldRef]);
 
   const getValue = useCallback(() => {
@@ -135,7 +135,7 @@ export default function InputField(props) {
       <StyledFormControl
         {...register(props.attr, validationObject)}
         type={props.type}
-        className='form-control'
+        className='field form-control'
         id={getId()}
         placeholder={toCamelCase(props.attr)}
         onChange={updateField}
