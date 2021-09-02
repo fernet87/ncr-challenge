@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import { createRef, useCallback, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { useError } from "../../../../contexts/error-context";
 import { toCamelCase } from "../../../../utils/string-utils";
@@ -23,14 +23,15 @@ export default function InputField(props) {
   const { register, setValue, formState: { errors } } = useFormContext();
   const { fieldError } = useError();
   const model = useModel();
+  const fieldRef = createRef();
 
-  const getId = useCallback(() => {
+  const getId = () => {
     return 'input-' + props.attr;
-  }, [props.attr]);
+  };
 
   const getField = useCallback(() => {
-    return document.getElementById(getId());
-  }, [getId]);
+    return fieldRef.current.getElementsByClassName("form-control")[0];
+  }, [fieldRef]);
 
   const getValue = useCallback(() => {
     let field = getField();
@@ -130,14 +131,14 @@ export default function InputField(props) {
   }
 
   return (
-    <div className="form-floating">
+    <div className="form-floating" ref={fieldRef} >
       <StyledFormControl
         {...register(props.attr, validationObject)}
         type={props.type}
         className='form-control'
         id={getId()}
         placeholder={toCamelCase(props.attr)}
-        onBlur={updateField}
+        onChange={updateField}
       />
       <StyledErrorMessage>
         {(errors && errors[props.attr]) ? 
