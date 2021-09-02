@@ -107,15 +107,15 @@ export default function User() {
       <div className="container">
         <div className="row">
           <div className="col-md-6">
-            <TextField attr={NAME.id} label={NAME.label} required ></TextField>
+            <TextField attr={NAME.id} label={NAME.label} minLength='2' required ></TextField>
           </div>
           <div className="col-md-6">
-            <TextField attr={LAST_NAME.id} label={LAST_NAME.label} required ></TextField>
+            <TextField attr={LAST_NAME.id} label={LAST_NAME.label} minLength='2' required ></TextField>
           </div>
         </div>
         <div className="row">
           <div className="col-md-6">
-            <TextField attr={USER.id} label={USER.label} required ></TextField>
+            <TextField attr={USER.id} label={USER.label} minLength='2' required ></TextField>
           </div>
           <div className="col-md-6">
             <MailField attr={EMAIL.id} label={EMAIL.label} required ></MailField>
