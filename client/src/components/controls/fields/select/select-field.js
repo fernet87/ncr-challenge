@@ -48,15 +48,16 @@ export default function SelectField(props) {
   });
   
   return (
-    <StyledFormSelect
-      {...register(props.attr)}
-      id={getId(props.attr)}
-      ref={fieldRef}
-      className="field form-select form-select-lg mb-4"
-      required={props.required}
-      onChange={onChange}>
-      {/* <option>{props.label}</option> */}
-      { getOptions() }
-    </StyledFormSelect>
+    <div ref={fieldRef}>
+      <StyledFormSelect
+        {...register(props.attr)}
+        id={getId(props.attr)}
+        className="field form-select form-select-lg mb-4"
+        required={props.required}
+        onChange={onChange}>
+        {/* <option>{props.label}</option> */}
+        { getOptions() }
+      </StyledFormSelect>
+    </div>
   );
 }
