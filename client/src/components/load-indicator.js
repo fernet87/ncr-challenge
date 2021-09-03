@@ -22,7 +22,7 @@ const withLoader = (loadingProp) => (WrappedComponent) => {
  
     return isEmpty(props[loadingProp]) ? 
       <WrappedComponent {...props} >
-        <StyledLoadingContainer className="loader" ></StyledLoadingContainer>
+        <StyledLoadingContainer></StyledLoadingContainer>
       </WrappedComponent> :
       <WrappedComponent {...props} ></WrappedComponent>;
   }
