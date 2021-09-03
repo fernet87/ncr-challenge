@@ -18,15 +18,13 @@ const isEmpty = (prop) => (
 );
  
 const withLoader = (loadingProp) => (WrappedComponent) => {
-  return class LoadIndicator extends Component {
+  return function LoadIndicator(props) {
  
-    render() {
-      return isEmpty(this.props[loadingProp]) ? 
-        <WrappedComponent {...this.props} >
-          <StyledLoadingContainer className="loader" ></StyledLoadingContainer>
-        </WrappedComponent> :
-        <WrappedComponent {...this.props} ></WrappedComponent>;
-    }
+    return isEmpty(props[loadingProp]) ? 
+      <WrappedComponent {...props} >
+        <StyledLoadingContainer className="loader" ></StyledLoadingContainer>
+      </WrappedComponent> :
+      <WrappedComponent {...props} ></WrappedComponent>;
   }
 }
  
