@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import AngularGaugeChart from "../components/charts/angular-gauge-chart";
 import SelectField from "../components/controls/fields/select/select-field";
 import PanelForm from "../components/panel-form";
-import { useSession } from "../contexts/user-context";
 import { getStats } from "../services/stats-service";
 import { getStores } from "../services/store-service";
 import styled from 'styled-components'
@@ -16,7 +15,6 @@ const StyledPercentageStats = styled.div`
 `;
 
 export default function Stats() {
-  const { checkLogin } = useSession();
   const [stores, setStores] = React.useState([]);
   const [stats, setStats] = React.useState({});
   let model = {store: 1};
@@ -47,7 +45,6 @@ export default function Stats() {
 
   return (
     <PanelForm title="Info de usuarios" size="large" model={model} >
-      { checkLogin() }
       <div className="row">
         <div className="col-md-6">
           <SelectField

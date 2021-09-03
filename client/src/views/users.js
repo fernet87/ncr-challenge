@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { useHistory, useLocation } from "react-router";
 import { Link } from 'react-router-dom';
 import AlertDialog from "../components/alert-dialog";
-import { useSession } from "../contexts/user-context";
 import { useAlertMessage } from "../contexts/alert-message-context";
 import { deleteUser, findUsersByStore } from '../services/user-service';
 import Panel from "../components/panel";
@@ -28,7 +27,6 @@ const columns =  [
 export default function Users() {
   const history = useHistory();
   const location = useLocation();
-  const { checkLogin } = useSession();
   const { addSuccessMessage, addErrorMessage } = useAlertMessage();
   const [userItems, setUserItems] = useState([]);
   const [users, setUsers] = useState(null);
@@ -113,7 +111,6 @@ export default function Users() {
 
   return (
     <Panel title={getTitle()} size="large" model={users} >
-      { checkLogin() }
       <table className="table">
         <thead>
           <tr>

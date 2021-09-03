@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import { useSession } from "../contexts/user-context";
 import { getStores } from "../services/store-service";
 import Panel from "../components/panel";
 import styled from 'styled-components'
@@ -35,7 +34,6 @@ const StyledText = styled.span`
 
 export default function Stores(props) {
   const history = useHistory();
-  const { checkLogin } = useSession();
   const [storeItems, setStoreItems] = useState([]);
   const [stores, setStores] = useState({});
 
@@ -66,7 +64,6 @@ export default function Stores(props) {
 
   return (
     <Panel title="Tiendas" size="small" model={stores} >
-      { checkLogin() }
       <div className="row justify-content-center" >
         { storeItems }
       </div>

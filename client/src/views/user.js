@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory } from "react-router-dom";
 import SubmitButton from "../components/controls/buttons/submit-button";
 import MailField from "../components/controls/fields/input/mail-field";
 import PasswordField from "../components/controls/fields/input/password-field";
@@ -9,7 +9,6 @@ import SelectField from "../components/controls/fields/select/select-field";
 import PanelForm from "../components/panel-form";
 import { useAlertMessage } from "../contexts/alert-message-context";
 import { useError } from "../contexts/error-context";
-import { useSession } from "../contexts/user-context";
 import { createUser, updateUser } from "../services/user-service";
 
 const [
@@ -32,8 +31,7 @@ const [
 
 export default function User() {
   const history = useHistory();
-  const { checkLogin } = useSession();
-  const [update, setUpdate] = React.useState(false);
+  const [update, setUpdate] = useState(false);
   const { addSuccessMessage, addErrorMessage } = useAlertMessage();
   const { addFieldError, cleanFieldError } = useError();
   const location = useLocation();
@@ -103,7 +101,6 @@ export default function User() {
   
   return (
     <PanelForm title={getTitle()} size="medium" model={model} onSubmit={onCreateUser} >
-      { checkLogin() }
       <div className="container">
         <div className="row">
           <div className="col-md-6">

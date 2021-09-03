@@ -1,25 +1,30 @@
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
-import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import App from './App';
+import { BrowserRouter, Route, Switch, withRouter } from "react-router-dom";
 import AlertMessage from './components/alert-message';
+import { BarsProvider } from './components/bars/bars-context';
+import NavBar from './components/bars/nav-bar';
+import SideBar from './components/bars/side-bar';
+import withAuth from './components/protected-routes';
 import { AlertMessageProvider } from './contexts/alert-message-context';
 import { ErrorProvider } from './contexts/error-context';
 import { SessionProvider } from './contexts/user-context';
+import './index.css';
+import reportWebVitals from './reportWebVitals';
 import Login from './views/login';
 import PageNotFound from "./views/page-not-found";
 import Stats from './views/stats';
 import Stores from './views/stores';
 import User from './views/user';
 import Users from './views/users';
-import reportWebVitals from './reportWebVitals';
-import NavBar from './components/bars/nav-bar';
-import SideBar from './components/bars/side-bar';
-import { BarsProvider } from './components/bars/bars-context';
+
+const UsersWithAuth = withRouter(withAuth(Users));
+const UserWithAuth = withRouter(withAuth(User));
+const StoresWithAuth = withRouter(withAuth(Stores));
+const StatsWithAuth = withRouter(withAuth(Stats));
 
 const routing = (
   <React.StrictMode>
@@ -36,21 +41,21 @@ const routing = (
               <div className="row justify-content-center">
                 <div className="col">
                   <Switch>
-                    <Route exact path="/" component={App} />
+                    <Route exact path="/" component={StoresWithAuth} />
                     <Route exact path="/Login">
                       <Login />
                     </Route>
                     <Route exact path="/Stores">
-                      <Stores />
+                      <StoresWithAuth />
                     </Route>
                     <Route exact path="/Users">
-                      <Users />
+                      <UsersWithAuth />
                     </Route>
                     <Route exact path="/User">
-                      <User />
+                      <UserWithAuth />
                     </Route>
                     <Route exact path="/Stats">
-                      <Stats />
+                      <StatsWithAuth />
                     </Route>
                     <Route component={PageNotFound} />
                   </Switch>

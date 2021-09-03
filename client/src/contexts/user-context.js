@@ -5,8 +5,6 @@ import React from "react";
 import { useAlertMessage } from "./alert-message-context";
 import { useHistory } from "react-router";
 import { useError } from "./error-context";
-import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
-import configData from "./../config.json";
 import { logIn as logInCall } from "../services/login-service";
 import { getSession, getSessionObject, setSessionObject, destroySession } from "../services/session-service";
 
@@ -42,20 +40,11 @@ export function SessionProvider(props) {
             setSession(getSession());
             history.push("/Login");
         }
-    
-        const checkLogin = () => {
-            const user = getSessionObject('user');
-            if (!configData.DEVELOP_MODE && !user) {
-            return <Redirect to="/login" />;
-            }
-            return <></>;
-        }
 
         return ({
             session,
             logIn,
-            logOut,
-            checkLogin
+            logOut
         });
     }, [session, addErrorMessage, addFieldError, addSuccessMessage, cleanFieldError, history]);
 
