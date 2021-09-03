@@ -1,7 +1,6 @@
 /* Method that checks whether a props is empty 
 prop can be an object, string or an array */
 
-import { Component } from "react";
 import styled from "styled-components";
 
 const StyledLoadingContainer = styled.div`

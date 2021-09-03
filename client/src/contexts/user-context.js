@@ -6,7 +6,7 @@ import { useAlertMessage } from "./alert-message-context";
 import { useHistory } from "react-router";
 import { useError } from "./error-context";
 import { logIn as logInCall } from "../services/login-service";
-import { getSession, getSessionObject, setSessionObject, destroySession } from "../services/session-service";
+import { getSession, setSessionObject, destroySession } from "../services/session-service";
 
 const SessionContext = React.createContext(() => {});
 
