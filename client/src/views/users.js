@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useHistory, useLocation } from "react-router";
 import { Link } from 'react-router-dom';
 import AlertDialog from "../components/alert-dialog";
@@ -30,10 +30,11 @@ export default function Users() {
   const location = useLocation();
   const { checkLogin } = useSession();
   const { addSuccessMessage, addErrorMessage } = useAlertMessage();
-  const [userItems, setUserItems] = React.useState([]);
-  const [show, setShow] = React.useState(false);
-  const [alertConfirmation, setAlertConfirmation] = React.useState(false);
-  const [userToBeDeleted, setUserToBeDeleted] = React.useState(null);
+  const [userItems, setUserItems] = useState([]);
+  const [users, setUsers] = useState(null);
+  const [show, setShow] = useState(false);
+  const [alertConfirmation, setAlertConfirmation] = useState(false);
+  const [userToBeDeleted, setUserToBeDeleted] = useState(null);
 
   const getProfileDescription = (profile) => {
     let profileDescription = '';
@@ -68,8 +69,9 @@ export default function Users() {
   const refreshTable = useCallback(() => {
     let storeId = (!location.state) ? -1 : location.state.store.id;
     if (storeId > -1) {
-      findUsersByStore(storeId).then((users) => {
-        const userItemList = users.map((user) =>
+      findUsersByStore(storeId).then((userList) => {
+        setUsers(userList);
+        const userItemList = userList.map((user) =>
           <tr  key={user.user} >
             <StyledTH scope="row">
               <Link to={{pathname: "/User", state: user}} >{user.name}</Link>
@@ -110,7 +112,7 @@ export default function Users() {
   }, [alertConfirmation, userToBeDeleted, refreshTable, setAlertConfirmation, addSuccessMessage, addErrorMessage]);
 
   return (
-    <Panel title={getTitle()} size="large" >
+    <Panel title={getTitle()} size="large" model={users} >
       { checkLogin() }
       <table className="table">
         <thead>

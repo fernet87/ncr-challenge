@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import withLoader from './load-indicator';
 
 const StyledContainer = styled.div`
   border: 1px solid #DDD;
@@ -37,7 +38,7 @@ const StyledTitle = styled.h1`
 
 
 // prop.size: "small", "medium", "large"
-export default function Panel(props) {
+function Panel(props) {
   return (
     <StyledContainer className={"container panel-container " + props.size}>
       <div className="row justify-content-center">
@@ -49,3 +50,5 @@ export default function Panel(props) {
     </StyledContainer>
   )
 }
+
+export default withLoader('model')(Panel);

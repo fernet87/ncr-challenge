@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { useSession } from "../contexts/user-context";
 import { getStores } from "../services/store-service";
@@ -36,15 +36,17 @@ const StyledText = styled.span`
 export default function Stores(props) {
   const history = useHistory();
   const { checkLogin } = useSession();
-  const [storeItems, setStoreItems] = React.useState([]);
+  const [storeItems, setStoreItems] = useState([]);
+  const [stores, setStores] = useState({});
 
   useEffect(() => {
     function navigateToStore(store) {
       history.push('/Users', { store: store } );
     };
   
-    getStores().then((stores) => {
-      const storeItemList = stores.map((store) =>
+    getStores().then((storeList) => {
+      setStores(storeList);
+      const storeItemList = storeList.map((store) =>
         <StyledContainer onClick={() => navigateToStore(store)} className="col-md-8" key={store.number} >
           <div className="row" >
             <div className="col-md-3" >
@@ -63,7 +65,7 @@ export default function Stores(props) {
   }, [setStoreItems, history]);
 
   return (
-    <Panel title="Tiendas" size="small" >
+    <Panel title="Tiendas" size="small" model={stores} >
       { checkLogin() }
       <div className="row justify-content-center" >
         { storeItems }
