@@ -39,7 +39,9 @@ export default function InputField(props) {
   }, [getField]);
 
   const updateField = () => {
-    model.set(props.attr, getValue());
+    let value = getValue();
+    model.set(props.attr, value);
+    setValue(props.attr, value);
   }
 
   const cleanErrorClasses = useCallback(() => {
