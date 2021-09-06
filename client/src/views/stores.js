@@ -60,6 +60,8 @@ export default function Stores(props) {
       );
       setStoreItems(storeItemList);
     });
+
+    return () => { setStoreItems([]); };
   }, [setStoreItems, history]);
 
   return (
