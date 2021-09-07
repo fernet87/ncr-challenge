@@ -3,12 +3,21 @@ import styled from 'styled-components'
 import Icon from './icon';
 import withLoader from './load-indicator';
 
+const StyledBoxShadow = `
+  box-shadow: 7px 7px 3px rgb(0 0 0 / 50%);
+`;
+
+const StyledBorder = `
+  border: 1px solid #CCC;
+`;
+
 const StyledContainer = styled.div`
-  border: 1px solid #DDD;
+  ${StyledBoxShadow};
+  ${StyledBorder};
+
   border-radius: 25px;
   padding: 30px;
   background-color: #FFF;
-  box-shadow: 7px 7px 3px rgb(0 0 0 / 50%);
   margin-top: 30px;
 
   &.small {
@@ -25,30 +34,39 @@ const StyledContainer = styled.div`
   
 `;
 
-const StyledHeader = styled.div`
-  position: relative;
+const StyledHeaderColor = `
+  background-color: #DED;
+  color: lightseagreen; /* Antes: #097890; */
+`;
+
+const StyledHeaderBorderRadius = `
+  ${StyledBorder};
+  border-radius: 10px;
+`;
+
+const StyledHeaderBoxShadow = `
+  box-shadow: 5px 5px 3px rgb(0 0 0 / 50%);
+`;
+
+const StyledHeaderContainer = `
+  ${StyledHeaderColor};
+  ${StyledHeaderBorderRadius};
+  ${StyledHeaderBoxShadow};
   padding-left: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
+`;
+
+const StyledHeader = styled.div`
+  ${StyledHeaderContainer};
+  position: relative;
   margin-bottom: 30px;
-  border: 1px solid #CCC;
-  border-radius: 10px;
-  background-color: #DED;
-  color: lightseagreen; /* Antes: #097890; */
-  box-shadow: 5px 5px 3px rgb(0 0 0 / 50%);
   height: 68px;
 `;
 
 const StyledTitle = styled.h2`
+  ${StyledHeaderContainer};
   position: absolute;
-  padding-left: 10px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  border: 1px solid #CCC;
-  border-radius: 10px;
-  background-color: #DED;
-  color: lightseagreen; /* Antes: #097890; */
-  box-shadow: 5px 5px 3px rgb(0 0 0 / 50%);
   font-family: cursive;
   display: inline;
 
@@ -62,25 +80,25 @@ const StyledTitle = styled.h2`
 `;
 
 const StyledAcctionsContainer = styled.div`
+  ${StyledHeaderBorderRadius};
+  ${StyledHeaderBoxShadow};
   position: absolute;
   margin-right: 10px;
   right: 0px;
   top: 5px;
-  border: 1px solid #CCC;
-  border-radius: 10px;
-  box-shadow: 5px 5px 3px rgb(0 0 0 / 50%);
   height: 50px;
   padding-left: 8px;
   padding-right: 8px;
 `;
 
 const StyledAcctionContainer = styled.div`
+  ${StyledBorder};
+  border-radius: 6px;
+  margin-top: 8px;
+
   & > .separation {
     padding: 0px;
   }
-  border: 1px solid #CCC;
-  border-radius: 6px;
-  margin-top: 8px;
 `;
 
 
