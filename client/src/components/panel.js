@@ -108,11 +108,9 @@ function Panel(props) {
   
   useEffect(() => {
     if (props.actions) {
+      titleRef.current.classList.remove("full-width");
       titleRef.current.classList.add("with-action-width");
     }
-    else {
-      titleRef.current.classList.add("full-width");
-    }  
   });
 
   return (
@@ -120,7 +118,7 @@ function Panel(props) {
       <div className="row justify-content-center">
         <div>
           <StyledHeader>
-            <StyledTitle ref={titleRef} >
+            <StyledTitle ref={titleRef} className="full-width" >
               {props.title}
             </StyledTitle>
             {(props.actions) ? 
