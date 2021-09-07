@@ -8,6 +8,7 @@ import { BarsProvider } from './components/bars/bars-context';
 import NavBar from './components/bars/nav-bar';
 import SideBar from './components/bars/side-bar';
 import withAuth from './components/protected-routes';
+import Tooltip from './components/tooltip';
 import { AlertMessageProvider } from './contexts/alert-message-context';
 import { ErrorProvider } from './contexts/error-context';
 import { SessionProvider } from './contexts/user-context';
@@ -27,6 +28,7 @@ const StatsWithAuth = withRouter(withAuth(Stats));
 
 const routing = (
   <React.StrictMode>
+    <Tooltip></Tooltip>
     <AlertMessageProvider>
       <AlertMessage></AlertMessage>
       <ErrorProvider>
