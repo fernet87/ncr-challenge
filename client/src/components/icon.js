@@ -10,10 +10,14 @@ const StyledIcon = styled.span(props => {
   return `
     font-size: 25px;
     cursor: pointer;
-    padding: 8px;
+    line-height: 100%;
     
     &:active {
       color: ${LIGHT_COLOR};
+    }
+
+    &.separation {
+      padding: 8px;
     }
     
     &.small {
@@ -85,6 +89,6 @@ export default function Icon(props) {
   });
   
   return (
-    <StyledIcon className={"icon bi bi-" + props.fontName + " " + size} style={{ color: props.color }} onClick={props.onClick} ></StyledIcon>
+    <StyledIcon className={"icon separation bi bi-" + props.fontName + " " + size} style={{ color: props.color }} onClick={props.onClick} ></StyledIcon>
   );
 }

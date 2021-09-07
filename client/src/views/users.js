@@ -21,7 +21,8 @@ const columns =  [
   { id: 'lastName', label: 'Apellido' },
   { id: 'user',  label: 'Usuario' },
   { id: 'mail', label: 'E-Mail' },
-  { id: 'profile', label: 'Perfil' }
+  { id: 'profile', label: 'Perfil' },
+  { id: 'remove', label: '' }
 ];
 
 export default function Users() {
@@ -67,18 +68,23 @@ export default function Users() {
   const refreshTable = useCallback(() => {
     let storeId = (!location.state) ? -1 : location.state.store.id;
     if (storeId > -1) {
+
+      const getTableRowClass = (index) => {
+        return (index % 2 !== 0) ? 'table-secondary' : '';
+      };
+
       findUsersByStore(storeId).then((userList) => {
         setUsers(userList);
-        const userItemList = userList.map((user) =>
+        const userItemList = userList.map((user, index) =>
           <tr  key={user.user} >
-            <StyledTH scope="row">
+            <StyledTH className={getTableRowClass(index)} scope="row">
               <Link to={{pathname: "/User", state: user}} >{user.name}</Link>
             </StyledTH>
-            <StyledTD>{user.lastName}</StyledTD>
-            <StyledTD>{user.user}</StyledTD>
-            <StyledTD>{user.mail}</StyledTD>
-            <StyledTD>{getProfileDescription(user.profile)}</StyledTD>
-            <StyledTD className="fs-4 mb-3">
+            <StyledTD className={getTableRowClass(index)}>{user.lastName}</StyledTD>
+            <StyledTD className={getTableRowClass(index)}>{user.user}</StyledTD>
+            <StyledTD className={getTableRowClass(index)}>{user.mail}</StyledTD>
+            <StyledTD className={getTableRowClass(index)}>{getProfileDescription(user.profile)}</StyledTD>
+            <StyledTD className={getTableRowClass(index) + ' fs-4 mb-3'}>
               <Icon fontName="trash-fill" medium onClick={() => removeUser(user)} ></Icon>
             </StyledTD>
           </tr>
@@ -110,16 +116,13 @@ export default function Users() {
   }, [alertConfirmation, userToBeDeleted, refreshTable, setAlertConfirmation, addSuccessMessage, addErrorMessage]);
 
   return (
-    <Panel title={getTitle()} size="large" model={users} >
-      <table className="table">
+    <Panel title={getTitle()} size="large" model={users} actions={[{ id: 'add', icon: 'plus', action: createUser }]}>
+      <table className="table table-hover">
         <thead>
           <tr>
             {columns.map((column) => (
-              <StyledTH scope="col" key={column.id}>{column.label}</StyledTH>
+              <StyledTH className="table-success" scope="col" key={column.id}>{column.label}</StyledTH>
             ))}
-            <StyledTH scope="col" className="fs-4 mb-3">
-              <Icon fontName="plus" medium onClick={() => createUser()} ></Icon>
-            </StyledTH>
           </tr>
         </thead>
         <tbody>
