@@ -116,7 +116,7 @@ export default function Users() {
   }, [alertConfirmation, userToBeDeleted, refreshTable, setAlertConfirmation, addSuccessMessage, addErrorMessage]);
 
   return (
-    <Panel title={getTitle()} size="large" model={users} actions={[{ id: 'add', icon: 'plus', action: createUser, tooltip: 'Crear un usuario.' }]}>
+    <Panel title={getTitle()} size="large" model={users} actions={[{ id: 'add', icon: 'plus', action: createUser, tooltip: 'Crear un usuario nuevo.' }]}>
       <table className="table table-hover">
         <thead>
           <tr>
