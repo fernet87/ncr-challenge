@@ -14,12 +14,13 @@ import { ErrorProvider } from './contexts/error-context';
 import { SessionProvider } from './contexts/user-context';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import Login from './views/login';
-import PageNotFound from "./views/page-not-found";
-import Stats from './views/stats';
-import Stores from './views/stores';
-import User from './views/user';
-import Users from './views/users';
+import Login from './pages/login';
+import PageNotFound from "./pages/page-not-found";
+import Stats from './pages/stats';
+import Stores from './pages/stores';
+import User from './pages/user';
+import Users from './pages/users';
+import ServerNotReady from './pages/server-not-ready';
 
 const UsersWithAuth = withRouter(withAuth(Users));
 const UserWithAuth = withRouter(withAuth(User));
@@ -59,6 +60,7 @@ const routing = (
                       <StatsWithAuth />
                     </Route>
                     <Route component={PageNotFound} />
+                    <Route component={ServerNotReady} />
                   </Switch>
                 </div>
               </div>
