@@ -20,63 +20,82 @@ import Stores from './pages/stores';
 import User from './pages/user';
 import Users from './pages/users';
 import ServerNotReady from './pages/server-not-ready';
+import { getSessionInfo } from './services/session-service';
 // import Tooltip from './components/tooltip';
 
-const UsersWithAuth = withRouter(withAuth(Users));
-const UserWithAuth = withRouter(withAuth(User));
-const StoresWithAuth = withRouter(withAuth(Stores));
-const StatsWithAuth = withRouter(withAuth(Stats));
-
-const routing = (
-  <React.StrictMode>
-    {/* <Tooltip></Tooltip> */}
-    <AlertMessageProvider>
-      <AlertMessage></AlertMessage>
-      <ErrorProvider>
-        <BrowserRouter>
-          <SessionProvider>
-            <BarsProvider>
-              <NavBar title="NCR Challenge" />
-              <SideBar icon="cart3" ></SideBar>
-            </BarsProvider>
-            <div className="container" >
-              <div className="row justify-content-center">
-                <div className="col">
-                  <Switch>
-                    <Route exact path="/" component={StoresWithAuth} />
-                    <Route exact path="/Login">
-                      <Login />
-                    </Route>
-                    <Route exact path="/Stores">
-                      <StoresWithAuth />
-                    </Route>
-                    <Route exact path="/Users">
-                      <UsersWithAuth />
-                    </Route>
-                    <Route exact path="/User">
-                      <UserWithAuth />
-                    </Route>
-                    <Route exact path="/Stats">
-                      <StatsWithAuth />
-                    </Route>
-                    <Route component={PageNotFound} />
-                    <Route component={ServerNotReady} />
-                  </Switch>
+let routing;
+getSessionInfo().then((sessionInfo) => {
+  const UsersWithAuth = withRouter(withAuth(Users));
+  const UserWithAuth = withRouter(withAuth(User));
+  const StoresWithAuth = withRouter(withAuth(Stores));
+  const StatsWithAuth = withRouter(withAuth(Stats));
+  
+  routing = (
+    <React.StrictMode>
+      {/* <Tooltip></Tooltip> */}
+      <AlertMessageProvider>
+        <AlertMessage></AlertMessage>
+        <ErrorProvider>
+          <BrowserRouter>
+            <SessionProvider>
+              <BarsProvider>
+                <NavBar title="NCR Challenge" />
+                <SideBar icon="cart3" ></SideBar>
+              </BarsProvider>
+              <div className="container" >
+                <div className="row justify-content-center">
+                  <div className="col">
+                    <Switch>
+                      <Route exact path="/" component={StoresWithAuth} />
+                      <Route exact path="/Login">
+                        <Login />
+                      </Route>
+                      <Route exact path="/Stores">
+                        <StoresWithAuth />
+                      </Route>
+                      <Route exact path="/Users">
+                        <UsersWithAuth />
+                      </Route>
+                      <Route exact path="/User">
+                        <UserWithAuth />
+                      </Route>
+                      <Route exact path="/Stats">
+                        <StatsWithAuth />
+                      </Route>
+                      <Route component={PageNotFound} />
+                      <Route component={ServerNotReady} />
+                    </Switch>
+                  </div>
                 </div>
               </div>
+            </SessionProvider>
+          </BrowserRouter>
+        </ErrorProvider>
+      </AlertMessageProvider>
+    </React.StrictMode>
+  );  
+}).catch(error => {
+  routing = (
+    <React.StrictMode>
+      <BrowserRouter>
+        <div className="container" >
+          <div className="row justify-content-center">
+            <div className="col">
+              <Switch>
+                <Route exact path="/" component={ServerNotReady} />
+              </Switch>
             </div>
-          </SessionProvider>
-        </BrowserRouter>
-      </ErrorProvider>
-    </AlertMessageProvider>
-  </React.StrictMode>
-);
-
-
-ReactDOM.render(
-  routing,
-  document.getElementById('root')
-);
+          </div>
+        </div>
+      </BrowserRouter>
+    </React.StrictMode>
+  );
+}).finally(() =>{
+  ReactDOM.render(
+    routing,
+    document.getElementById('root')
+  );
+});
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

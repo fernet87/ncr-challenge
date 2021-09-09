@@ -26,7 +26,7 @@ public class SessionController extends BaseController {
   @Autowired
   UserService userService;
 
-  @GetMapping(path = "/info")
+  @GetMapping()
   public ResponseEntity<Response> getCurrentSessionInfo() {
     SessionInfoModel sessionInfo = SessionInfoModel.getInstance();
     return this.responseOk(sessionInfo);

@@ -3,6 +3,10 @@ import jsSHA from "jssha";
 
 const BASE_URL = 'session';
 
+export async function getSessionInfo() {
+  return get(BASE_URL);
+}
+
 export async function logIn(user, password) {
   const shaObj = new jsSHA("SHA-256", "TEXT", { encoding: "UTF8" });
   shaObj.update(password);

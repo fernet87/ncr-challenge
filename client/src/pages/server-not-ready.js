@@ -1,9 +1,15 @@
 import React from "react"
-import { useHistory } from "react-router";
+import styled from "styled-components";
+
+const StyledContainer = styled.div`
+    margin-top: 150px;
+`;
+
+const StyledRow = styled.div`
+    margin-top: 30px;
+`;
 
 const ServerNotReady = () => {
-  const history = useHistory();
-
   const getServerNotAvailableTitle = () => {
     return "The application server is currently not available";
   }
@@ -17,23 +23,27 @@ const ServerNotReady = () => {
   }
 
   const onServerNotAvailableAction = () => {
-    history.push('/');
+    window.location.reload();
   }
 
   return (
-    <div className="content">
-      <div className="">
-        <h2>
-          {getServerNotAvailableTitle()}
-        </h2>
-        <h3>
-          {getServerNotAvailableDescription()}
-        </h3>
-        <h3>
-          <a href="/#" onClick={onServerNotAvailableAction()} >{getServerNotAvailableActionText()}</a>
-        </h3>
-      </div>
-    </div>
+    <StyledContainer className="container" >
+      <StyledRow className="row justify-content-center">
+        <div className="col" align="center">
+          <h2>{getServerNotAvailableTitle()}</h2>
+        </div>      
+      </StyledRow>
+      <StyledRow className="row justify-content-center">
+        <div className="col" align="center">
+          <h3>{getServerNotAvailableDescription()}</h3>
+        </div>      
+      </StyledRow>
+      <StyledRow className="row justify-content-center">
+        <div className="col" align="center">
+          <h3><a href="/#" onClick={onServerNotAvailableAction} >{getServerNotAvailableActionText()}</a></h3>
+        </div>      
+      </StyledRow>
+    </StyledContainer>
   )
 }
 export default ServerNotReady
