@@ -13,7 +13,7 @@ import lombok.Data;
 @Table(
   name = "user",
   uniqueConstraints = {
-    @UniqueConstraint(name = "user_unique_user_idx", columnNames = {"user"}),
+    @UniqueConstraint(name = "user_unique_user_idx", columnNames = {"userName"}),
     @UniqueConstraint(name = "user_unique_mail_idx", columnNames = {"mail"})
   }
 )
@@ -21,7 +21,7 @@ public class User extends BaseEntity {
   
   private String name;
   private String lastName;
-  private String user;
+  private String userName;
   private String mail;
   private String password;
   private Short profile;

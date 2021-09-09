@@ -15,4 +15,8 @@ public abstract class ResponseException extends Exception {
     BaseModel<BaseEntity> model = (entity == null) ? null : new BaseModel<BaseEntity>(entity);
     return new ErrorResponse(this.getStatus(), model, this.getMessage(), this.getField());
   }
+
+  public ErrorResponse createResponse(BaseModel<BaseEntity> model) {
+    return new ErrorResponse(this.getStatus(), model, this.getMessage(), this.getField());
+  }
 }

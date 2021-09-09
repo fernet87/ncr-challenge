@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useBars } from "./bars-context";
-import { useSession } from "../../contexts/user-context";
+import { useSession } from "../../contexts/session-context";
 import useNavigationItems from "../../hooks/navigation-items";
 import Icon from "../icon";
 import useReactPath from "../../hooks/path-name";
@@ -57,7 +57,7 @@ export default function SideBar(props) {
   const pathname = useReactPath();
 
   const getUserName = () => {
-    return (session) ? session.user.name + " " + session.user.lastName : null;
+    return (session && session.user) ? session.user.id : null;
   }
 
   const getActiveClass = useCallback((item) => {

@@ -30,7 +30,7 @@ public class UserTest {
     user.setName("User");
     user.setLastName("Test");
     user.setMail("user.test@gmail.com");
-    user.setUser("UserTest");
+    user.setUserName("UserTest");
     user.setPassword("UserTest99");
     user.setProfile(profile);
     user.setStore(store);
@@ -50,7 +50,7 @@ public class UserTest {
   void testCreate() {
     User newUser = newCashierInstance(storeRepository.findById(1L).get());
     userRepository.save(newUser);
-    User userInDb = userRepository.findByUser(newUser.getUser()).get();
+    User userInDb = userRepository.findByUserName(newUser.getUserName()).get();
     assert (newUser == userInDb);
   }
 
@@ -100,16 +100,16 @@ public class UserTest {
     assert ("User" == newSupervisorInDb.getName());
     assert ("Test" == newSupervisorInDb.getLastName());
     assert ("user.test@gmail.com" == newSupervisorInDb.getMail());
-    assert ("UserTest" == newSupervisorInDb.getUser());
+    assert ("UserTest" == newSupervisorInDb.getUserName());
     assert ("UserTest99" == newSupervisorInDb.getPassword());
     assert ((short) 2 == newSupervisorInDb.getProfile());
     assert (storeRepository.findById(1L).get() == newSupervisorInDb.getStore());
 
-    User userInDb = userRepository.findByUser("UserTest").get();
+    User userInDb = userRepository.findByUserName("UserTest").get();
     userInDb.setName("NewUser");
     userInDb.setLastName("NewTest");
     userInDb.setMail("new.user.test@gmail.com");
-    userInDb.setUser("NewUserTest");
+    userInDb.setUserName("NewUserTest");
     userInDb.setPassword("NewUserTest99");
     userInDb.setProfile((short) 1);
     userInDb.setStore(storeRepository.findById(2L).get());
@@ -118,7 +118,7 @@ public class UserTest {
     assert ("NewUser" == updatedUserInDb.getName());
     assert ("NewTest" == updatedUserInDb.getLastName());
     assert ("new.user.test@gmail.com" == updatedUserInDb.getMail());
-    assert ("NewUserTest" == updatedUserInDb.getUser());
+    assert ("NewUserTest" == updatedUserInDb.getUserName());
     assert ("NewUserTest99" == updatedUserInDb.getPassword());
     assert ((short) 1 == updatedUserInDb.getProfile());
     assert (storeRepository.findById(2L).get() == updatedUserInDb.getStore());

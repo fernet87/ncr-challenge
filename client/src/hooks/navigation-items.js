@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSession } from "../contexts/user-context";
+import { useSession } from "../contexts/session-context";
 import useReactPath from "./path-name";
 
 const itemList = [

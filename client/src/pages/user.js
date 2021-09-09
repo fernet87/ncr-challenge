@@ -14,7 +14,7 @@ import { createUser, updateUser } from "../services/user-service";
 const [
   NAME,
   LAST_NAME,
-  USER,
+  USER_NAME,
   EMAIL,
   PASSWORD,
   REPEAT_PASSWORD,
@@ -22,7 +22,7 @@ const [
 ] = [
   { id: 'name', label: 'Nombre' },
   { id: 'lastName', label: 'Apellido' },
-  { id: 'user',  label: 'Usuario' },
+  { id: 'userName',  label: 'Usuario' },
   { id: 'mail', label: 'E-Mail' },
   { id: 'password', label: 'Contraseña' },
   { id: 'repeatPassword', label: 'Repetir Contraseña' },
@@ -68,7 +68,7 @@ export default function User() {
     let object = {
       name: model.name,
       lastName: model.lastName,
-      user: model.user,
+      user: model.userName,
       mail: model.mail,
       password: model.password,
       repeatPassword: model.repeatPassword,
@@ -93,7 +93,7 @@ export default function User() {
   }
 
   useEffect(() => {
-    if (location.state && location.state.user) {
+    if (location.state && location.state.userName) {
       setUpdate(true);
       // setTitle(getTitle());
     }
@@ -112,7 +112,7 @@ export default function User() {
         </div>
         <div className="row">
           <div className="col-md-6">
-            <TextField attr={USER.id} label={USER.label} minLength='2' required ></TextField>
+            <TextField attr={USER_NAME.id} label={USER_NAME.label} minLength='2' required ></TextField>
           </div>
           <div className="col-md-6">
             <MailField attr={EMAIL.id} label={EMAIL.label} required ></MailField>

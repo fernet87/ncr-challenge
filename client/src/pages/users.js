@@ -76,7 +76,7 @@ export default function Users() {
       findUsersByStore(storeId).then((userList) => {
         setUsers(userList);
         const userItemList = userList.map((user, index) =>
-          <tr  key={user.user} >
+          <tr  key={user.userName} >
             <StyledTH className={getTableRowClass(index)} scope="row">
               <Link to={{pathname: "/User", state: user}} >{user.name}</Link>
             </StyledTH>

@@ -5,13 +5,14 @@ import java.util.Optional;
 import com.ncr.challenge.entities.User;
 import com.ncr.challenge.exceptions.InvalidPasswordResponseException;
 import com.ncr.challenge.exceptions.UserNotFoundResponseException;
+import com.ncr.challenge.models.SessionInfoModel;
 
 import org.springframework.stereotype.Service;
 
 @Service
 public class LoginService {
   
-  public User doLogin(Optional<User> optionalUser, String password) throws UserNotFoundResponseException, InvalidPasswordResponseException {
+  public SessionInfoModel doLogin(Optional<User> optionalUser, String password) throws UserNotFoundResponseException, InvalidPasswordResponseException {
     User user = null;
 
     if (!optionalUser.isEmpty()) {
@@ -25,7 +26,11 @@ public class LoginService {
       throw new InvalidPasswordResponseException();
     }
 
-    return user;
+    SessionInfoModel sessionInfo = SessionInfoModel.getInstance();
+    sessionInfo.setUser(new SessionInfoModel.UserInfoData()); 
+    sessionInfo.getUser().setId(user.getUserName());
+
+    return sessionInfo;
   }
   
 }

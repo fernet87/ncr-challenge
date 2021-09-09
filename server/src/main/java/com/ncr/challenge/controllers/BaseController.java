@@ -16,27 +16,31 @@ import org.springframework.http.ResponseEntity;
 
 public class BaseController {
 
-  public ResponseEntity<Response> buildResponseEntity(Response responseBody) {
+  public ResponseEntity<Response> buildResponse(Response responseBody) {
     return ResponseEntity.status(responseBody.getStatus()).body(responseBody);
   }
 
+  public ResponseEntity<Response> buildResponseFromException(ResponseException responseException, BaseModel<BaseEntity> model) {
+    return buildResponse(responseException.createResponse(model));
+  }
+
   public ResponseEntity<Response> buildResponseEntityFromException(ResponseException responseException, BaseEntity entity) {
-    return buildResponseEntity(responseException.createResponse(entity));
+    return buildResponse(responseException.createResponse(entity));
   }
   
   public <M extends BaseModel<E>, E extends BaseEntity> ResponseEntity<Response> responseOk(M model) {
     Response responseBody = new Response(HttpStatus.OK, model);
-    return buildResponseEntity(responseBody);
+    return buildResponse(responseBody);
   }
 
   public <M extends BaseModel<E>, E extends BaseEntity> ResponseEntity<Response> responseOk(E entity, Class<M> clazz) {
     Response responseBody = new Response(HttpStatus.OK, convertEntityToModel(entity, clazz));
-    return buildResponseEntity(responseBody);
+    return buildResponse(responseBody);
   }
     
   public ResponseEntity<Response> responseOk() {
     Response responseBody = new Response(HttpStatus.OK);
-    return buildResponseEntity(responseBody);
+    return buildResponse(responseBody);
   }
 
   public <M extends BaseModel<E>, E extends BaseEntity> ResponseEntity<Response> responseOk(Optional<E> optionalEntity, Class<M> clazz) {
@@ -44,12 +48,12 @@ public class BaseController {
     if (!optionalEntity.isEmpty()) {
       responseBody.setModel(convertEntityToModel(optionalEntity.get(), clazz));
     }
-    return buildResponseEntity(responseBody);
+    return buildResponse(responseBody);
   }
 
   public ResponseEntity<Response> responseList(List<? extends BaseModel<? extends BaseEntity>> modelList) {
     Response responseBody = new Response(HttpStatus.OK, modelList);
-    return buildResponseEntity(responseBody);
+    return buildResponse(responseBody);
   }
   
   public <M extends BaseModel<E>, E extends BaseEntity> ResponseEntity<Response> responseEntityList(List<E> entityList, Class<M> clazz) {
@@ -59,7 +63,7 @@ public class BaseController {
       modelList.add(convertEntityToModel(entity, clazz));
     });
 
-    return buildResponseEntity(new Response(HttpStatus.OK, modelList));
+    return buildResponse(new Response(HttpStatus.OK, modelList));
   }
 
   private <M extends BaseModel<E>, E extends BaseEntity> M convertEntityToModel(E entity, Class<M> clazz) {
@@ -76,7 +80,7 @@ public class BaseController {
 
   public <M extends BaseModel<E>, E extends BaseEntity> ResponseEntity<Response> responseError(BaseEntity entity, String message, String field, HttpStatus status, Class<M> clazz) {
     ErrorResponse responseBody = new ErrorResponse(status, new BaseModel<BaseEntity>(entity), message, field);
-    return buildResponseEntity(responseBody);
+    return buildResponse(responseBody);
   }
 
   public <M extends BaseModel<E>, E extends BaseEntity> ResponseEntity<Response> responseError(BaseEntity entity, String message, HttpStatus status, Class<M> clazz) {

@@ -12,7 +12,7 @@ public class UserModel extends BaseModel<User> {
 
   private String name;
   private String lastName;
-  private String user;
+  private String userName;
   private String mail;
   private String password;
   private Short profile;
