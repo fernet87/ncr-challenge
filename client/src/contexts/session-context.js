@@ -5,7 +5,7 @@ import React from "react";
 import { useAlertMessage } from "./alert-message-context";
 import { useHistory } from "react-router";
 import { useError } from "./error-context";
-import { logIn as logInCall, logOut as logOutCall } from "../services/login-service";
+import { logIn as logInCall, logOut as logOutCall } from "../services/session-service";
 import { getSessionStorageObject, setSessionStorageObject, destroySession } from "../services/session-storage-service";
 
 const SessionContext = React.createContext(() => {});
@@ -38,7 +38,6 @@ export function SessionProvider(props) {
     const logOut = () => {
       logOutCall()
       .then((session) => {
-        // setSessionStorageObject('session', session);
         destroySession();
         setSession(session);
         addSuccessMessage("Te deslogueaste exitosamente!");
