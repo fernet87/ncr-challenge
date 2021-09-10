@@ -36,8 +36,7 @@ public class LoginTest {
 
     Optional<User> optionalUser = userRepository.findByUserName("perez");
     SessionInfoModel loggedUser = loginService.doLogin(optionalUser, perezHashedPass);
-    assertEquals("Pablo" , loggedUser.getUser().getId());
-    // assertEquals("Perez" , loggedUser.getLastName());
+    assertEquals("perez" , loggedUser.getUser().getId());
   }
   
   @Test

@@ -27,8 +27,9 @@ public class BaseModel<T extends BaseEntity> {
     }
   }
 
+  @SuppressWarnings("unchecked")
   public BaseEntity toEntity() {
-    ParameterizedType superClass = (ParameterizedType) getClass().getGenericSuperclass();
+    ParameterizedType superClass = (ParameterizedType) getClass().getGenericSuperclass();   
     Class<T> type = (Class<T>) superClass.getActualTypeArguments()[0];
     T genericClassParameter = null;
     
