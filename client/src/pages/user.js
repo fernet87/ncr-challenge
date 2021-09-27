@@ -68,7 +68,7 @@ export default function User() {
     let object = {
       name: model.name,
       lastName: model.lastName,
-      user: model.userName,
+      userName: model.userName,
       mail: model.mail,
       password: model.password,
       repeatPassword: model.repeatPassword,
